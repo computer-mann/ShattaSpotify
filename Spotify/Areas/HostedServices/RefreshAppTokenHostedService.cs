@@ -36,6 +36,7 @@ namespace Spotify.Areas.HostedServices
             }
             else
             {
+                //make better logs
                 logger.LogWarning("Something bad happened");
             }
         }
