@@ -15,6 +15,7 @@ using Spotify.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Spotify
 {
@@ -80,6 +81,10 @@ namespace Spotify
 
         public void Configure(IApplicationBuilder app,IHostEnvironment env)
         {
+            //app.UseForwardedHeaders(new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            //});
 
             AddSchedulingServices(app);
             app.UseSerilogRequestLogging();
