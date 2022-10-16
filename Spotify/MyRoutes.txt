@@ -1,0 +1,26 @@
+﻿ var configurationOptions = new ConfigurationOptions
+            {
+                EndPoints = { "localhost:6379" },
+                Ssl = true
+            };
+
+
+https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-album
+
+https://developer.spotify.com/documentation/general/guides/authorization/scopes/
+
+https://developer.spotify.com/documentation/general/guides/authorization/code-flow/
+https://datatracker.ietf.org/doc/html/rfc6749#section-4.1
+
+Add-Migration -Context SpotifyDbContexts -Name FifthOne -OutputDir Migrations/Spotify
+
+Update-Database -Context SpotifyDbContexts
+https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases
+ToDo: fix the db columns
+      think about whether to store the profile data and how
+178.62.27.46
+root
+
+https://developer.spotify.com/console/get-album/
+
+104.248.169.200

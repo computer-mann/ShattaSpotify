@@ -1,0 +1,1 @@
+docker run --name devDbForAll -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Kllop9090 -e MYSQL_USER=commputermann -e MYSQL_PASSWORD=Kllop9090 -d mysql
