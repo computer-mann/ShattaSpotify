@@ -18,7 +18,7 @@ namespace Spotify.Services
         private readonly IConnectionMultiplexer _redis;
         private readonly IHashids hashid;
         private readonly IHttpClientFactory httpClientFactory;
-        private readonly SpotifyAccessKey spotifyAccessKey;
+        private readonly SpotifyAccessKey spotifyAccessKey; //i should probably make this a singleton
         private readonly ILogger<SpotifyAuthHttpService> logger;
 
         public SpotifyAuthHttpService(IHttpClientFactory httpClientFactory,IConnectionMultiplexer redis,
