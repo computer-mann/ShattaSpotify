@@ -19,4 +19,12 @@ namespace Spotify.CustomMiddlewares
             await _next(context);
         }
     }
+
+    public static class SchedulingServiceMidddlewareExtension
+    {
+        public static IApplicationBuilder UseSchedulingService(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<SchedulingServiceMidddleware>();
+        }
+    }
 }

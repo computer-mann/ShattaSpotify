@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.HttpOverrides;
+using Spotify.CustomMiddlewares;
 
 namespace Spotify
 {
@@ -98,6 +99,7 @@ namespace Spotify
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMvc();
+            //app.UseSchedulingService();
             
         }
 
