@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Spotify.Controllers
+namespace Spotify.Areas.HealthCheck.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     [AllowAnonymous]
