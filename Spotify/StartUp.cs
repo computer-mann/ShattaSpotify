@@ -80,6 +80,7 @@ namespace Spotify
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:Key").ToString()))
                 };
             });
+            services.AddRazorPages().WithRazorPagesRoot("/Areas/HealthCheck/");
         }
 
         public void Configure(IApplicationBuilder app,IHostEnvironment env)
