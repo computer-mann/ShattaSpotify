@@ -13,7 +13,7 @@ namespace Spotify_Test
             
         }
 
-        [Test]
-        public void GetClientAccessTokenAsync
+        //[Test]
+        //public void GetClientAccessTokenAsync
     }
 }

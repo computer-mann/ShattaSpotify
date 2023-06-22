@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.HttpOverrides;
 using Spotify.CustomMiddlewares;
+using Spotify.Utilities;
 
 namespace Spotify
 {
@@ -63,6 +64,7 @@ namespace Spotify
             services.AddScheduler();
             services.AddTransient<RefreshAppTokenHostedService>();
             services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();
+            services.AddTransient<IAuthUtils,AuthUtils>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Audience = "apiusers";
@@ -109,7 +111,7 @@ namespace Spotify
             var provider = app.ApplicationServices;
             provider.UseScheduler(schedulers =>
             {
-                schedulers.Schedule<RefreshAppTokenHostedService>().Hourly();
+                schedulers.Schedule<RefreshAppTokenHostedService>().Hourly().RunOnceAtStart();
                 
             });
         }

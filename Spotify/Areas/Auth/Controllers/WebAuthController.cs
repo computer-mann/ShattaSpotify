@@ -34,10 +34,11 @@ namespace Spotify.Areas.Auth.Controllers
        private readonly IConnectionMultiplexer multiplexer;
        private readonly JwtParams jwtParams;
        private readonly UserManager<MusicLover> userManager;
+        private readonly IAuthUtils authUtils;
 
         public WebAuthController(ISpotifyAuth spotifyAuth, ILogger<WebAuthController> _logger,
             IOptions<SpotifyAccessKey> options, IHttpClientFactory httpClient, IConnectionMultiplexer connection,
-            IOptions<JwtParams> options1,UserManager<MusicLover> userManager)
+            IOptions<JwtParams> options1, UserManager<MusicLover> userManager, IAuthUtils authUtils)
         {
             this.spotifyAuth = spotifyAuth;
             this._logger = _logger;
@@ -46,13 +47,14 @@ namespace Spotify.Areas.Auth.Controllers
             multiplexer = connection;
             this.jwtParams = options1.Value;
             this.userManager = userManager;
+            this.authUtils = authUtils;
         }
 
 
         [HttpGet("/web/login")]
         public async Task<IActionResult> SpotifyWebLogin()
         {
-            var rString = AuthUtils.RandomStringGenerator();
+            var rString = authUtils.RandomStringGenerator();
             _logger.LogInformation("Attempting to login user");
             NameValueCollection queryString= HttpUtility.ParseQueryString(string.Empty);
             queryString.Add("response_type", "code");
@@ -108,7 +110,7 @@ namespace Spotify.Areas.Auth.Controllers
                         if (await LocalStringSetAsync(userInfo.Email, serializedSpotifyToken.AccessToken, "spotifytoken", TimeSpan.FromMinutes(60)))
                         {
                             //Generate the jwt token
-                            var myJwToken=AuthUtils.GenerateJWToken(userInfo.Email,userInfo.DisplayName,jwtParams);
+                            var myJwToken=authUtils.GenerateJWToken(userInfo.Email,userInfo.DisplayName,jwtParams);
                             return Redirect($"{returnUrl}/login?token=" + myJwToken);
                         }
                         else

@@ -59,6 +59,7 @@ namespace Spotify.Services
                     return tokenResult;
                 }
             }
+            logger.LogCritical("Token request not successful: {message}",result.ToString());
             return new TokenResult() { Success=false};
         }
 
