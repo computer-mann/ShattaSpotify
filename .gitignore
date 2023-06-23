@@ -367,3 +367,46 @@ appsettings.Development.json
 
 Spotify-Test/obj/
 Spotify-Test/bin/
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/web-frontend/spotify-frontend/dist
+/web-frontend/spotify-frontend/tmp
+/web-frontend/spotify-frontend/out-tsc
+/web-frontend/spotify-frontend/bazel-out
+
+# Node
+/web-frontend/spotify-frontend/node_modules
+/web-frontend/spotify-frontend/npm-debug.log
+/web-frontend/spotify-frontend/yarn-error.log
+
+# IDEs and editors
+/web-frontend/spotify-frontend/.idea/
+/web-frontend/spotify-frontend/.project
+/web-frontend/spotify-frontend/.classpath
+/web-frontend/spotify-frontend/.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+/web-frontend/spotify-frontend/.history/*
+
+# Miscellaneous
+/web-frontend/spotify-frontend/.angular/cache
+/web-frontend/spotify-frontend/.sass-cache/
+/web-frontend/spotify-frontend/connect.lock
+/web-frontend/spotify-frontend/coverage
+/web-frontend/spotify-frontend/libpeerconnection.log
+/web-frontend/spotify-frontend/testem.log
+/web-frontend/spotify-frontend/typings
+
+# System files
+/web-frontend/spotify-frontend/.DS_Store
+/web-frontend/spotify-frontend/Thumbs.db
