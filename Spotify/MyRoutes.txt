@@ -18,6 +18,7 @@ Update-Database -Context SpotifyDbContexts
 https://developer.spotify.com/documentation/web-api/reference/#/operations/get-new-releases
 ToDo: fix the db columns
       think about whether to store the profile data and how
+      fix the access token lifetime
 178.62.27.46
 root
 

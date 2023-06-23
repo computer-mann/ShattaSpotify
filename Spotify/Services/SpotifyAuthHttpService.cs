@@ -36,6 +36,7 @@ namespace Spotify.Services
             var accessKey = await db.StringGetAsync("clientAccessKey");
             if (!accessKey.IsNullOrEmpty)
             {
+                logger.LogInformation("Client Access token has not expired. Skipping new request from Spotify");
                 return new TokenResult() { AccessToken=accessKey};
             }
             var httpContent = new FormUrlEncodedContent(new Dictionary<string, string> { { "grant_type", "client_credentials" } });
@@ -48,6 +49,7 @@ namespace Spotify.Services
             if (result.IsSuccessStatusCode)
             {
                 var tokenResult = JsonSerializer.Deserialize<TokenResult>(await result.Content.ReadAsStringAsync());
+                logger.LogInformation("the token lifetime is : {token}",tokenResult.ExpiresIn);
                 var inCache = await db.StringSetAsync("clientAccessKey", tokenResult.AccessToken, TimeSpan.FromSeconds(tokenResult.ExpiresIn));
                 if (inCache)
                 {
