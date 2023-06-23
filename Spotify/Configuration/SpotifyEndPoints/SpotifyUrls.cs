@@ -45,7 +45,7 @@
     public class SearchArtistUrls
     {
         public const string baseEndpoint = "https://api.spotify.com/v1";
-        public const string SearchforItem = "https://api.spotify.com/v1/search?q=sarkodie&type=artist&limit=3";
+        public const string SearchforItem = "https://api.spotify.com/v1/search?q=sarkodie&type=artist&limit=1";
         
     }
     public class UsersProfileUrls

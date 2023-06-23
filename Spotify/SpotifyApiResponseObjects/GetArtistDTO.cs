@@ -3,37 +3,7 @@
 
 namespace Spotify.Models.SpotifyApiResponseObjects
 {
-        public partial class GetArtistDTO
-        {
-            [JsonPropertyName("artists")]
-            public Artists Artists { get; set; }
-        }
-
-        public partial class Artists
-        {
-            [JsonPropertyName("href")]
-            public Uri Href { get; set; }
-
-            [JsonPropertyName("items")]
-            public List<Item> Items { get; set; }
-
-            [JsonPropertyName("limit")]
-            public long Limit { get; set; }
-
-            [JsonPropertyName("next")]
-            public Uri Next { get; set; }
-
-            [JsonPropertyName("offset")]
-            public long Offset { get; set; }
-
-            [JsonPropertyName("previous")]
-            public object Previous { get; set; }
-
-            [JsonPropertyName("total")]
-            public long Total { get; set; }
-        }
-
-        public partial class Item
+        public partial class Temperatures
         {
             [JsonPropertyName("external_urls")]
             public ExternalUrls ExternalUrls { get; set; }
@@ -92,6 +62,4 @@ namespace Spotify.Models.SpotifyApiResponseObjects
             [JsonPropertyName("width")]
             public long Width { get; set; }
         }
- 
-}
-
+ }

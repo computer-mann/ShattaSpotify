@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Spotify.Configuration.SpotifyEndPoints;
 using Spotify.Models.SpotifyApiResponseObjects;
+using Spotify.SpotifyApiResponseObjects;
 using Spotify.Utilities;
 using StackExchange.Redis;
 using System.Net.Http.Headers;
@@ -27,7 +28,7 @@ namespace Spotify.Controllers
             var result=await _httpClient.GetAsync(SearchArtistUrls.SearchforItem);
             if (result.IsSuccessStatusCode)
             {
-                var json = JsonSerializer.Deserialize<GetArtistDTO>(await result.Content.ReadAsStringAsync());
+                var json = JsonSerializer.Deserialize<GetSearchQueryDto>(await result.Content.ReadAsStringAsync());
                 return Ok(json);
             }
             //add a global cache data exception
