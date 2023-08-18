@@ -3,13 +3,13 @@
 namespace Spotify.SpotifyApiResponseObjects
 {
     // GetSearchQueryDto
-    public partial class GetSearchQueryDto
+    public class GetSearchQueryDto
     {
         [JsonPropertyName("artists")]
         public Artists Artists { get; set; }
     }
 
-    public partial class Artists
+    public class Artists
     {
         [JsonPropertyName("href")]
         public Uri Href { get; set; }
@@ -33,7 +33,7 @@ namespace Spotify.SpotifyApiResponseObjects
         public long Total { get; set; }
     }
 
-    public partial class Item
+    public class Item
     {
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
@@ -66,13 +66,13 @@ namespace Spotify.SpotifyApiResponseObjects
         public string Uri { get; set; }
     }
 
-    public partial class ExternalUrls
+    public class ExternalUrls
     {
         [JsonPropertyName("spotify")]
         public Uri Spotify { get; set; }
     }
 
-    public partial class Followers
+    public class Followers
     {
         [JsonPropertyName("href")]
         public object Href { get; set; }
@@ -81,7 +81,7 @@ namespace Spotify.SpotifyApiResponseObjects
         public long Total { get; set; }
     }
 
-    public partial class Image
+    public class Image
     {
         [JsonPropertyName("height")]
         public long Height { get; set; }
