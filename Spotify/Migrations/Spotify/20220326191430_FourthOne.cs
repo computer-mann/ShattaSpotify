@@ -43,7 +43,7 @@ namespace Spotify.Migrations.Spotify
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "Timestamp",
-                table: "MusicLovers",
+                table: "MusicNerds",
                 type: "timestamp(6)",
                 rowVersion: true,
                 nullable: true,
@@ -110,7 +110,7 @@ namespace Spotify.Migrations.Spotify
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "Timestamp",
-                table: "MusicLovers",
+                table: "MusicNerds",
                 type: "timestamp(6)",
                 rowVersion: true,
                 nullable: true,

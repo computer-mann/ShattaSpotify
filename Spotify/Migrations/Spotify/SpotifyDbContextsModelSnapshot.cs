@@ -19,7 +19,7 @@ namespace Spotify.Migrations.Spotify
                 .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Spotify.Areas.Auth.Models.MusicLover", b =>
+            modelBuilder.Entity("Spotify.Areas.Auth.Models.MusicNerd", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,7 +32,7 @@ namespace Spotify.Migrations.Spotify
 
                     b.HasKey("Id");
 
-                    b.ToTable("MusicLovers");
+                    b.ToTable("MusicNerds");
                 });
 
             modelBuilder.Entity("Spotify.Models.Album", b =>

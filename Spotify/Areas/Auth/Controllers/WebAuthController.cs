@@ -33,12 +33,12 @@ namespace Spotify.Areas.Auth.Controllers
        private readonly IHttpClientFactory _httpClientFactory;
        private readonly IConnectionMultiplexer multiplexer;
        private readonly JwtParams jwtParams;
-       private readonly UserManager<MusicLover> userManager;
+       private readonly UserManager<MusicNerd> userManager;
         private readonly IAuthUtils authUtils;
 
         public WebAuthController(ISpotifyAuth spotifyAuth, ILogger<WebAuthController> _logger,
             IOptions<SpotifyAccessKey> options, IHttpClientFactory httpClient, IConnectionMultiplexer connection,
-            IOptions<JwtParams> options1, UserManager<MusicLover> userManager, IAuthUtils authUtils)
+            IOptions<JwtParams> options1, UserManager<MusicNerd> userManager, IAuthUtils authUtils)
         {
             this.spotifyAuth = spotifyAuth;
             this._logger = _logger;
@@ -100,7 +100,7 @@ namespace Spotify.Areas.Auth.Controllers
                 if (profileResult.IsSuccessStatusCode)
                 {
                     var userInfo= JsonSerializer.Deserialize<UserProfileInfo>(await profileResult.Content.ReadAsStringAsync());
-                    var userManagerResult = await userManager.CreateAsync(new MusicLover()
+                    var userManagerResult = await userManager.CreateAsync(new MusicNerd()
                     {
                         Email = userInfo.Email,
                         UserName=userInfo.DisplayName

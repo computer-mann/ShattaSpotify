@@ -13,7 +13,8 @@ namespace Spotify.Models
         public DbSet<FollowedArtist> FollowedArtists { get; set; }
         public DbSet<Album> Albums { get; set; }
         public DbSet<PlayList> PlayLists { get; set; }
-        public DbSet<MusicLover> MusicLovers { get; set; }
+        public DbSet<MusicNerd> MusicNerds { get; set; }
+        public Artist Artists { get; set; }
 
     }
 }

@@ -60,7 +60,7 @@ namespace Spotify
                 options.UseMySql(Configuration.GetConnectionString("mysql"), sqlVersion);
             });
 
-            services.AddIdentityCore<MusicLover>().AddEntityFrameworkStores<AuthDbContext>();
+            services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
             services.AddScheduler();
             services.AddTransient<RefreshAppTokenHostedService>();
             services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();

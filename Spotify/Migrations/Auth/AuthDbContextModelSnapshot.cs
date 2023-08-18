@@ -147,7 +147,7 @@ namespace Spotify.Migrations.Auth
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Spotify.Areas.Auth.Models.MusicLover", b =>
+            modelBuilder.Entity("Spotify.Areas.Auth.Models.MusicNerd", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -222,7 +222,7 @@ namespace Spotify.Migrations.Auth
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Spotify.Areas.Auth.Models.MusicLover", null)
+                    b.HasOne("Spotify.Areas.Auth.Models.MusicNerd", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -231,7 +231,7 @@ namespace Spotify.Migrations.Auth
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Spotify.Areas.Auth.Models.MusicLover", null)
+                    b.HasOne("Spotify.Areas.Auth.Models.MusicNerd", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -246,7 +246,7 @@ namespace Spotify.Migrations.Auth
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Spotify.Areas.Auth.Models.MusicLover", null)
+                    b.HasOne("Spotify.Areas.Auth.Models.MusicNerd", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -255,7 +255,7 @@ namespace Spotify.Migrations.Auth
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Spotify.Areas.Auth.Models.MusicLover", null)
+                    b.HasOne("Spotify.Areas.Auth.Models.MusicNerd", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

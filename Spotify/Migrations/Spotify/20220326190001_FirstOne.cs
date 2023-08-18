@@ -45,7 +45,7 @@ namespace Spotify.Migrations.Spotify
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "MusicLovers",
+                name: "MusicNerds",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -55,7 +55,7 @@ namespace Spotify.Migrations.Spotify
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MusicLovers", x => x.Id);
+                    table.PrimaryKey("PK_MusicNerds", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -99,7 +99,7 @@ namespace Spotify.Migrations.Spotify
                 name: "FollowedArtists");
 
             migrationBuilder.DropTable(
-                name: "MusicLovers");
+                name: "MusicNerds");
 
             migrationBuilder.DropTable(
                 name: "PlayLists");

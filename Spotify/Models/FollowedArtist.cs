@@ -7,8 +7,8 @@ namespace Spotify.Models
     
     public class FollowedArtist: BaseModel
     {
-        public MusicLover User { get; set; }
-        public MusicLover MusicLoverId { get; set; }
+        public MusicNerd User { get; set; }
+        public MusicNerd MusicNerdId { get; set; }
         public Artist Artist { get; set; }
         public string ArtistId { get; set; }
     }
