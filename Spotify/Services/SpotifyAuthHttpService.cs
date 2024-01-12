@@ -33,7 +33,8 @@ namespace Spotify.Services
         public async Task<TokenResult> GetClientAccessTokenAsync()
         {
             var db = _redis.GetDatabase();
-            var accessKey = await db.StringGetAsync("clientAccessKey");
+            const string RedisKey = "clientAccessKey";
+            var accessKey = await db.StringGetAsync(RedisKey);
             if (!accessKey.IsNullOrEmpty)
             {
                 logger.LogInformation("Client Access token has not expired. Skipping new request from Spotify");
@@ -50,7 +51,7 @@ namespace Spotify.Services
             {
                 var tokenResult = JsonSerializer.Deserialize<TokenResult>(await result.Content.ReadAsStringAsync());
                 logger.LogInformation("the token lifetime is : {token}",tokenResult.ExpiresIn);
-                var inCache = await db.StringSetAsync("clientAccessKey", tokenResult.AccessToken, TimeSpan.FromSeconds(tokenResult.ExpiresIn));
+                var inCache = await db.StringSetAsync(RedisKey, tokenResult.AccessToken, TimeSpan.FromSeconds(tokenResult.ExpiresIn));
                 if (inCache)
                 {
                     return tokenResult;

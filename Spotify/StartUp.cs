@@ -51,13 +51,15 @@ namespace Spotify
             services.AddMvc(options=>options.EnableEndpointRouting = false);
             services.AddRouting(options=> options.LowercaseUrls = true);
             var sqlVersion = new MySqlServerVersion(new Version(8, 0, 28));
+            string connectionString = Configuration.GetConnectionString("mysql");
             services.AddDbContext<SpotifyDbContexts>(options =>
             {
-                options.UseMySql(Configuration.GetConnectionString("mysql"), sqlVersion);
+                
+                options.UseMySql(connectionString, sqlVersion);
             });
             services.AddDbContext<AuthDbContext>(options =>
             {
-                options.UseMySql(Configuration.GetConnectionString("mysql"), sqlVersion);
+                options.UseMySql(connectionString, sqlVersion);
             });
 
             services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();

@@ -25,3 +25,5 @@ root
 https://developer.spotify.com/console/get-album/
 
 104.248.169.200
+
+https://docs.songstats.com/docs/api/6659134e76415-get-track-current-stats

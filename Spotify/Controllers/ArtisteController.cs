@@ -31,8 +31,6 @@ namespace Spotify.Controllers
             {
                 var json = JsonSerializer.Deserialize<GetSearchQueryDto>(await result.Content.ReadAsStringAsync());
                 var item = json.Artists.Items.First();
-
-
                 return Ok(new Artist(item.Id,item.Name,item.Images.First().Url.ToString()));
             }
             //add a global cache data exception
