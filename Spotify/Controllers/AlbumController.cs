@@ -1,4 +1,5 @@
-﻿using HashidsNet;
+﻿using FirebaseAdmin.Auth;
+using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Spotify.Controllers
@@ -18,6 +19,23 @@ namespace Spotify.Controllers
         {
             string encoded = hashids.Encode(43);
             return Ok(new { hashedId = encoded });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateUser()
+        {
+            UserRecordArgs args = new UserRecordArgs()
+            {
+                Email = "phnunoo83@example.com",
+                EmailVerified = false,
+                PhoneNumber = "+11234567890",
+                Password = "secretPassword",
+                DisplayName = "John Doe",
+                PhotoUrl = "http://www.example.com/12345678/photo.png",
+                Disabled = false,
+            };
+            UserRecord userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(args);
+            return Ok(userRecord);
         }
     }
 }

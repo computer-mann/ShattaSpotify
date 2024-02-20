@@ -18,6 +18,8 @@ using System.Text;
 using Microsoft.AspNetCore.HttpOverrides;
 using Spotify.CustomMiddlewares;
 using Spotify.Utilities;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 
 namespace Spotify
 {
@@ -39,17 +41,25 @@ namespace Spotify
             {
                 options.AddServerHeader = false;
             });
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile("C:\\Users\\hpsn1\\OneDrive\\Documents\\Projects\\cmfirstapp-1941d-firebase-adminsdk-60ady-1258ed7d20.json"),
+                ProjectId = "cmfirstapp-1941d"
+            });
+
             services.AddControllers();
-            services.AddEndpointsApiExplorer();
+           // services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHttpClient();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
             services.Configure<SpotifyAccessKey>(Configuration.GetSection("Spotify"));
             services.Configure<JwtParams>(Configuration.GetSection("JWT"));
             services.AddSingleton<IHashids>(new Hashids(Configuration.GetSection("HashId:Salt").Value, 5));
-            var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);
+          /*  var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-            services.AddMvc(options=>options.EnableEndpointRouting = false);
-            services.AddRouting(options=> options.LowercaseUrls = true);
+            
+            
             var sqlVersion = new MySqlServerVersion(new Version(8, 0, 28));
             string connectionString = Configuration.GetConnectionString("mysql");
             services.AddDbContext<SpotifyDbContexts>(options =>
@@ -60,14 +70,14 @@ namespace Spotify
             services.AddDbContext<AuthDbContext>(options =>
             {
                 options.UseMySql(connectionString, sqlVersion);
-            });
+            });*/
 
-            services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
-            services.AddScheduler();
-            services.AddTransient<RefreshAppTokenHostedService>();
-            services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();
-            services.AddTransient<IAuthUtils,AuthUtils>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+           // services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
+            //services.AddScheduler();
+           // services.AddTransient<RefreshAppTokenHostedService>();
+           // services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();
+            //services.AddTransient<IAuthUtils,AuthUtils>();
+           /* services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Audience = "apiusers";
                 options.Authority = "iamcomputermann";
@@ -81,7 +91,7 @@ namespace Spotify
                     ValidAudience = Configuration.GetSection("JWT:Audience").ToString(),
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:Key").ToString()))
                 };
-            });
+            });*/
         }
 
         public void Configure(IApplicationBuilder app,IHostEnvironment env)
@@ -91,7 +101,7 @@ namespace Spotify
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             //});
 
-            AddSchedulingServices(app);
+           // UseSchedulingServices(app);
             app.UseSerilogRequestLogging();
             if (env.IsDevelopment())
             {
@@ -100,15 +110,15 @@ namespace Spotify
             }
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
             app.UseMvc();
             //app.UseSchedulingService();
             
         }
 
 
-        private void AddSchedulingServices(IApplicationBuilder app)
+        private void UseSchedulingServices(IApplicationBuilder app)
         {
             var provider = app.ApplicationServices;
             provider.UseScheduler(schedulers =>
