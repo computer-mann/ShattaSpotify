@@ -50,48 +50,50 @@ namespace Spotify
             services.AddControllers();
            // services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+           
+            services.AddScheduler();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHttpClient();
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.Configure<SpotifyAccessKey>(Configuration.GetSection("Spotify"));
             services.Configure<JwtParams>(Configuration.GetSection("JWT"));
             services.AddSingleton<IHashids>(new Hashids(Configuration.GetSection("HashId:Salt").Value, 5));
-          /*  var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);
-            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-            
-            
-            var sqlVersion = new MySqlServerVersion(new Version(8, 0, 28));
-            string connectionString = Configuration.GetConnectionString("mysql");
-            services.AddDbContext<SpotifyDbContexts>(options =>
-            {
-                
-                options.UseMySql(connectionString, sqlVersion);
-            });
-            services.AddDbContext<AuthDbContext>(options =>
-            {
-                options.UseMySql(connectionString, sqlVersion);
-            });*/
+            /*  var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);
+              services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+               services.AddTransient<RefreshAppTokenCoravelService>();
+             services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();
 
-           // services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
-            //services.AddScheduler();
-           // services.AddTransient<RefreshAppTokenHostedService>();
-           // services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();
+              var sqlVersion = new MySqlServerVersion(new Version(8, 0, 28));
+              string connectionString = Configuration.GetConnectionString("mysql");
+              services.AddDbContext<SpotifyDbContexts>(options =>
+              {
+
+                  options.UseMySql(connectionString, sqlVersion);
+              });
+              services.AddDbContext<AuthDbContext>(options =>
+              {
+                  options.UseMySql(connectionString, sqlVersion);
+              });*/
+
+            // services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
+
+
             //services.AddTransient<IAuthUtils,AuthUtils>();
-           /* services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.Audience = "apiusers";
-                options.Authority = "iamcomputermann";
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateAudience = true,
-                    ValidateIssuer = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration.GetSection("JWT:Issuer").ToString(),
-                    ValidAudience = Configuration.GetSection("JWT:Audience").ToString(),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:Key").ToString()))
-                };
-            });*/
+            /* services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+             {
+                 options.Audience = "apiusers";
+                 options.Authority = "iamcomputermann";
+                 options.RequireHttpsMetadata = false;
+                 options.TokenValidationParameters = new TokenValidationParameters()
+                 {
+                     ValidateAudience = true,
+                     ValidateIssuer = true,
+                     ValidateIssuerSigningKey = true,
+                     ValidIssuer = Configuration.GetSection("JWT:Issuer").ToString(),
+                     ValidAudience = Configuration.GetSection("JWT:Audience").ToString(),
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:Key").ToString()))
+                 };
+             });*/
         }
 
         public void Configure(IApplicationBuilder app,IHostEnvironment env)
@@ -101,7 +103,7 @@ namespace Spotify
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             //});
 
-           // UseSchedulingServices(app);
+            app.UseCoravelSchedulingServices();
             app.UseSerilogRequestLogging();
             if (env.IsDevelopment())
             {
@@ -113,19 +115,11 @@ namespace Spotify
             //app.UseAuthentication();
             //app.UseAuthorization();
             app.UseMvc();
-            //app.UseSchedulingService();
+            
             
         }
 
 
-        private void UseSchedulingServices(IApplicationBuilder app)
-        {
-            var provider = app.ApplicationServices;
-            provider.UseScheduler(schedulers =>
-            {
-                schedulers.Schedule<RefreshAppTokenHostedService>().Hourly().RunOnceAtStart();
-                
-            });
-        }
+        
     }
 }

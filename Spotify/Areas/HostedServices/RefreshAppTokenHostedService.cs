@@ -5,14 +5,14 @@ using Spotify.Services.Interfaces;
 
 namespace Spotify.Areas.HostedServices
 {
-    public class RefreshAppTokenHostedService: IInvocable
+    public class RefreshAppTokenCoravelService: IInvocable
     {
         //should go and get the latest tokens every 3580 seconds
-        private readonly ILogger<RefreshAppTokenHostedService> logger;
+        private readonly ILogger<RefreshAppTokenCoravelService> logger;
         private readonly ISpotifyAuth auth;
         
 
-        public RefreshAppTokenHostedService(ILogger<RefreshAppTokenHostedService> logger, 
+        public RefreshAppTokenCoravelService(ILogger<RefreshAppTokenCoravelService> logger, 
             ISpotifyAuth auth)
         {
             this.logger = logger;
@@ -22,7 +22,7 @@ namespace Spotify.Areas.HostedServices
 
         public async Task Invoke()
         {
-            logger.LogInformation("Timed RefreshApp Token Hosted Service running.");
+            logger.LogInformation("Timed RefreshApp Token Coravel Service running.");
             await SeekHourlyTokens();
         }
 
