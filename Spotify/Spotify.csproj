@@ -41,9 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\HealthCheck\Data\" />
-    <Folder Include="Areas\HealthCheck\Models\" />
-    <Folder Include="Areas\HealthCheck\Views\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 

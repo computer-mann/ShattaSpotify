@@ -6,6 +6,7 @@ namespace Spotify.Areas.HostedServices
     /*
      * to get new releases, get the artist's song 
      * then get 
+     * payload should have a release date
      */
     public class CheckNewReleasesHostedService : IInvocable
     {

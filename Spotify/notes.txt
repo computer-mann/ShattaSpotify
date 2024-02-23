@@ -1,0 +1,10 @@
+﻿Get the user's playlist
+determine which playlist new music will be added to
+
+
+in my specific case:
+ I need new shatta music to be added to the 'shattaplay' playlist if its not already there
+
+
+ some endpoints need only developer auth token
+ some need user's auth too

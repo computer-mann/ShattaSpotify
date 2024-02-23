@@ -59,7 +59,7 @@ namespace Spotify.Areas.Auth.Controllers
             NameValueCollection queryString= HttpUtility.ParseQueryString(string.Empty);
             queryString.Add("response_type", "code");
             queryString.Add("client_id", spotifyAccessKey.ClientId);
-            queryString.Add("scope", $"{AuthorizationScopes.UserReadEmail} {AuthorizationScopes.UserReadPrivate}");
+            queryString.Add("scope", $"{AuthorizationScopes.UserReadEmail} {AuthorizationScopes.UserReadPrivate} {AuthorizationScopes.PlaylistReadPrivate} {AuthorizationScopes.PlaylistReadCollaborative}");
             queryString.Add("redirect_uri", spotifyAccessKey.RedirectUri);
             queryString.Add("state", rString);
             var result = await LocalStringSetAsync(rString, "1","randomgenerator",TimeSpan.FromSeconds(20));
