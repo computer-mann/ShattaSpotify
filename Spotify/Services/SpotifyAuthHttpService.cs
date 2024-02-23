@@ -37,7 +37,7 @@ namespace Spotify.Services
             var accessKey = await db.StringGetAsync(RedisKey);
             if (!accessKey.IsNullOrEmpty)
             {
-                logger.LogInformation("Client Access token has not expired. Skipping new request from Spotify");
+                logger.LogInformation("Client Access token has not expired. Skipping new request to Spotify");
                 return new TokenResult() { AccessToken=accessKey};
             }
             var httpContent = new FormUrlEncodedContent(new Dictionary<string, string> { { "grant_type", "client_credentials" } });
