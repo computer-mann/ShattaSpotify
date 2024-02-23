@@ -27,7 +27,7 @@ namespace Spotify.Areas.HostedServices
         }
 
 
-        async Task SeekHourlyTokens()
+       private async Task SeekHourlyTokens()
         {
             var result=await auth.GetClientAccessTokenAsync();
             if (result.Success)

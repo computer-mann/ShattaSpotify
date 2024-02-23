@@ -12,7 +12,7 @@ namespace Spotify.CustomMiddlewares
             provider.UseScheduler(schedulers =>
             {
                 schedulers.Schedule<RefreshAppTokenCoravelService>().Hourly().RunOnceAtStart();
-                schedulers.Schedule(() => Console.WriteLine("Every minute during the week.")).EveryTenSeconds().RunOnceAtStart();
+                schedulers.Schedule(() => Console.WriteLine("Every second of the app running.")).EveryTenSeconds().RunOnceAtStart();
 
             });
             return app;
