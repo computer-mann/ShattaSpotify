@@ -3,7 +3,7 @@ using Spotify.Models;
 
 namespace Spotify.Areas.Auth.Models
 {
-    public class MusicNerd : IdentityUser<int>
+    public class Streamer : IdentityUser
     {
 
     }

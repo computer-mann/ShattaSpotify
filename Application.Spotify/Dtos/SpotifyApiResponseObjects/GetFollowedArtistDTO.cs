@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Spotify.SpotifyApiResponseObjects
+namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
 {
 
 

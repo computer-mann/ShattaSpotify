@@ -1,4 +1,4 @@
-﻿namespace Spotify.SpotifyApiResponseObjects
+﻿namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
 {
     public class GetPlayListDTO
     {

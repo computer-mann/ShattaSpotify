@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Spotify.Areas.Auth.Models.DbContext
 {
-    public class AuthDbContext : IdentityDbContext<MusicNerd, IdentityRole<int>, int>
+    public class AuthDbContext : IdentityDbContext<Streamer>
     {
         public AuthDbContext(DbContextOptions<AuthDbContext> options):base(options)
         {

@@ -1,6 +1,6 @@
 ﻿using Coravel.Invocable;
 
-namespace Spotify.Areas.HostedServices
+namespace Presentation.Spotify.HostedServices
 {
     public class WeeklyDbSongClearanceHostedService : IInvocable
     {

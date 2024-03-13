@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spotify.Areas.Auth.Models;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Spotify.Models
 {
@@ -13,7 +15,7 @@ namespace Spotify.Models
         public DbSet<FollowedArtist> FollowedArtists { get; set; }
         public DbSet<Album> Albums { get; set; }
         public DbSet<PlayList> PlayLists { get; set; }
-        public DbSet<MusicNerd> MusicNerds { get; set; }
+        public DbSet<Streamer> MusicNerds { get; set; }
         public Artist Artists { get; set; }
 
     }

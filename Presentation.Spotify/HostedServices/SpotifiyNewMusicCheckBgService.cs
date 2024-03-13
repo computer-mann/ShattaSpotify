@@ -1,4 +1,4 @@
-﻿namespace Spotify.Areas.HostedServices
+﻿namespace Presentation.Spotify.HostedServices
 {
     //long running operations, I am expecting
     public class SpotifiyNewMusicCheckBgService : BackgroundService

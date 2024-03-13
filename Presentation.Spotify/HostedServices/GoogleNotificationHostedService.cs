@@ -1,6 +1,6 @@
 ﻿using FirebaseAdmin;
 
-namespace Spotify.Areas.HostedServices
+namespace Presentation.Spotify.HostedServices
 {
     //short operations
     //how do i guarrantee the notification was sent?

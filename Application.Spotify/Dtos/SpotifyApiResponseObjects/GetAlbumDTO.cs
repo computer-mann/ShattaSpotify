@@ -1,4 +1,4 @@
-﻿namespace Spotify.Models.SpotifyApiResponseObjects
+﻿namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
 {
     public class GetAlbumDTO
     {
@@ -60,7 +60,7 @@
             public string uri { get; set; }
         }
 
-  
+
 
         public class Artist
         {
@@ -72,11 +72,11 @@
             public string uri { get; set; }
         }
 
-    
 
-    
 
-  
+
+
+
         public class Copyright
         {
             public string text { get; set; }

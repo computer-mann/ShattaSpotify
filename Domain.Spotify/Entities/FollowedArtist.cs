@@ -1,5 +1,6 @@
 ﻿using Spotify.Areas.Auth.Models;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace Spotify.Models
 {
@@ -7,8 +8,8 @@ namespace Spotify.Models
     
     public class FollowedArtist: BaseModel
     {
-        public MusicNerd User { get; set; }
-        public MusicNerd MusicNerdId { get; set; }
+        public Streamer User { get; set; }
+        public Streamer StreamerdId { get; set; }
         public Artist Artist { get; set; }
         public string ArtistId { get; set; }
     }

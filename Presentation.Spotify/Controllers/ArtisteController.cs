@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Spotify.Configuration.SpotifyEndPoints;
 using Spotify.Models;
-using Spotify.Models.SpotifyApiResponseObjects;
-using Spotify.SpotifyApiResponseObjects;
+
 using Spotify.Utilities;
 using StackExchange.Redis;
 using System.Net.Http.Headers;

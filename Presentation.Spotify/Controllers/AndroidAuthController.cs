@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 
-namespace Spotify.Areas.Auth.Controllers
+namespace Presentation.Spotify.Controllers
 {
     [ApiController]
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -10,7 +10,7 @@ namespace Spotify.Areas.Auth.Controllers
     {
         public AndroidAuthController()
         {
-           
+
         }
 
         [Route("login")]
@@ -18,7 +18,7 @@ namespace Spotify.Areas.Auth.Controllers
         {
             return View();
         }
-        
+
         [Route("callback")]
         public IActionResult Callback()
         {
