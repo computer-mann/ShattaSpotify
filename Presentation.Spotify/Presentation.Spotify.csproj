@@ -62,4 +62,8 @@
 		<PackageReference Include="StackExchange.Redis" Version="2.6.116" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Infrastructure.Spotify\Infrastructure.Spotify.csproj" />
+	</ItemGroup>
 </Project>
