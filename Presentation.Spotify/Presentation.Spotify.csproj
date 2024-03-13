@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<UserSecretsId>5f31aac3-fd9b-42e7-b557-0a88bd0d2f22</UserSecretsId>
+	<OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -72,6 +73,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Application.Spotify\Application.Spotify.csproj" />
 	  <ProjectReference Include="..\Infrastructure.Spotify\Infrastructure.Spotify.csproj" />
 	</ItemGroup>
 </Project>

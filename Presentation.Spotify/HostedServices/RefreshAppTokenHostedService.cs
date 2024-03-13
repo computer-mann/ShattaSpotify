@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using Coravel.Invocable;
 using Spotify.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Presentation.Spotify.HostedServices
 {

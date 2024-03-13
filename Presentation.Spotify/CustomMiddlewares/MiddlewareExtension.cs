@@ -1,5 +1,6 @@
 ﻿using Coravel;
 using Coravel.Scheduling.Schedule;
+using Microsoft.AspNetCore.Builder;
 using Presentation.Spotify.HostedServices;
 
 namespace Spotify.CustomMiddlewares

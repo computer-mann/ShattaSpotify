@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Spotify.Areas.HostedServices;
 using Spotify.Configuration;
 using Spotify.Configuration.SpotifyEndPoints;
 using Spotify.Models;
 using StackExchange.Redis;
-using Pomelo.EntityFrameworkCore.MySql;
 using Spotify.Areas.Auth.Models.DbContext;
 using Spotify.Areas.Auth.Models;
 using Coravel;
@@ -19,6 +17,12 @@ using Spotify.CustomMiddlewares;
 using Spotify.Utilities;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
+using HashidsNet;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 
 namespace Spotify
 {
@@ -102,7 +106,7 @@ namespace Spotify
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             //});
 
-            app.UseCoravelSchedulingServices();
+            //app.UseCoravelSchedulingServices();
             app.UseSerilogRequestLogging();
             if (env.IsDevelopment())
             {

@@ -1,4 +1,5 @@
 ﻿using FirebaseAdmin;
+using Microsoft.Extensions.Hosting;
 
 namespace Presentation.Spotify.HostedServices
 {

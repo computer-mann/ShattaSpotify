@@ -1,4 +1,5 @@
 ﻿using Coravel.Invocable;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
 namespace Presentation.Spotify.HostedServices
