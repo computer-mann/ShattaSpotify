@@ -1,0 +1,6 @@
+@Api.Presentation.Spotify_HostAddress = http://localhost:5030
+
+GET {{Api.Presentation.Spotify_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
