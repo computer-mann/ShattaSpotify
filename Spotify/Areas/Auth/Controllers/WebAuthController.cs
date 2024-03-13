@@ -79,11 +79,13 @@ namespace Spotify.Areas.Auth.Controllers
             {
                 return Redirect($"{returnUrl}/login/error");
             }
-            Dictionary<string,string> form= new Dictionary<string, string>();
-            form.Add("code", code);
-            form.Add("state", state);
-            form.Add("grant_type", "authorization_code");
-            form.Add("redirect_uri", spotifyAccessKey.RedirectUri);
+            Dictionary<string,string> form= new Dictionary<string, string>
+            {
+                { "code", code },
+                { "state", state },
+                { "grant_type", "authorization_code" },
+                { "redirect_uri", spotifyAccessKey.RedirectUri }
+            };
             var bytes = Encoding.UTF8.GetBytes($"{spotifyAccessKey.ClientId}:{spotifyAccessKey.ClientSecret}");
             var encodedkeys = WebEncoders.Base64UrlEncode(bytes);
             var formContent = new FormUrlEncodedContent(form);

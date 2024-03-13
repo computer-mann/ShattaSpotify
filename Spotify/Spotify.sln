@@ -12,6 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		PERSONAL_NOTES.MD = PERSONAL_NOTES.MD
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Spotify", "..\Domain.Spotify\Domain.Spotify.csproj", "{7CA4E8FF-86CB-48E5-A72F-C2298C7DA325}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Spotify", "..\Infrastructure.Spotify\Infrastructure.Spotify.csproj", "{DAF99CA5-8030-4C11-A1AC-9BDDEB584250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Spotify", "..\Application.Spotify\Application.Spotify.csproj", "{75BE66E9-3C4D-4DF6-B919-DE8E949AA2C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Spotify", "..\Presentation.Spotify\Presentation.Spotify.csproj", "{8B43EA76-CFD0-4518-91B2-A8BD3199D9B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +34,22 @@ Global
 		{2EF7DFB5-E9E7-4560-A126-EBFAC7CFE37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EF7DFB5-E9E7-4560-A126-EBFAC7CFE37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EF7DFB5-E9E7-4560-A126-EBFAC7CFE37C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CA4E8FF-86CB-48E5-A72F-C2298C7DA325}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CA4E8FF-86CB-48E5-A72F-C2298C7DA325}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CA4E8FF-86CB-48E5-A72F-C2298C7DA325}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CA4E8FF-86CB-48E5-A72F-C2298C7DA325}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAF99CA5-8030-4C11-A1AC-9BDDEB584250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAF99CA5-8030-4C11-A1AC-9BDDEB584250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAF99CA5-8030-4C11-A1AC-9BDDEB584250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAF99CA5-8030-4C11-A1AC-9BDDEB584250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75BE66E9-3C4D-4DF6-B919-DE8E949AA2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75BE66E9-3C4D-4DF6-B919-DE8E949AA2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75BE66E9-3C4D-4DF6-B919-DE8E949AA2C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75BE66E9-3C4D-4DF6-B919-DE8E949AA2C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B43EA76-CFD0-4518-91B2-A8BD3199D9B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B43EA76-CFD0-4518-91B2-A8BD3199D9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B43EA76-CFD0-4518-91B2-A8BD3199D9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B43EA76-CFD0-4518-91B2-A8BD3199D9B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
