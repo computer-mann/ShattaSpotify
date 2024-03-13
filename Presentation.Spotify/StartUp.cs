@@ -1,5 +1,4 @@
-﻿using HashidsNet;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Spotify.Areas.HostedServices;
 using Spotify.Configuration;

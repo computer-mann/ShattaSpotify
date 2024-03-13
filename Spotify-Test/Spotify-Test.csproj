@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Spotify\Spotify.csproj" />
+    <ProjectReference Include="..\Presentation.Spotify\Presentation.Spotify.csproj" />
   </ItemGroup>
 
 </Project>
