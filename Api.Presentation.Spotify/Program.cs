@@ -111,12 +111,14 @@ namespace Api.Presentation.Spotify
         }
         private static void Configure(WebApplication app)
         {
+            app.UseHsts();
             //app.UseForwardedHeaders(new ForwardedHeadersOptions
             //{
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             //});
 
             //app.UseCoravelSchedulingServices();
+
             app.UseSerilogRequestLogging();
             if (app.Environment.IsDevelopment())
             {
