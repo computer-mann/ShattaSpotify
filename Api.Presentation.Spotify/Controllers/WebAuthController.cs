@@ -29,7 +29,7 @@ namespace Presentation.Spotify.Controllers
     public class WebAuthController : ControllerBase
     {
         private readonly ILogger<WebAuthController> _logger;
-        private readonly ISpotifyAuth spotifyAuth;
+        private readonly ISpotifyHttpService spotifyAuth;
         private readonly SpotifyAccessKey spotifyAccessKey;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConnectionMultiplexer multiplexer;
@@ -37,7 +37,7 @@ namespace Presentation.Spotify.Controllers
         private readonly UserManager<Streamer> userManager;
         private readonly IAuthUtils authUtils;
 
-        public WebAuthController(ISpotifyAuth spotifyAuth, ILogger<WebAuthController> _logger,
+        public WebAuthController(ISpotifyHttpService spotifyAuth, ILogger<WebAuthController> _logger,
             IOptions<SpotifyAccessKey> options, IHttpClientFactory httpClient, IConnectionMultiplexer connection,
             IOptions<JwtParams> options1, UserManager<Streamer> userManager, IAuthUtils authUtils)
         {

@@ -15,16 +15,16 @@ namespace Spotify.Services
     //this will have the non-user(client) token see
     // the authorization flows
 
-    public class SpotifyAuthHttpService : ISpotifyAuth
+    public class SpotifyHttpService : ISpotifyHttpService
     {
         private readonly IConnectionMultiplexer _redis;
         private readonly IHashids hashid;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly SpotifyAccessKey spotifyAccessKey; //i should probably make this a singleton
-        private readonly ILogger<SpotifyAuthHttpService> logger;
+        private readonly ILogger<SpotifyHttpService> logger;
 
-        public SpotifyAuthHttpService(IHttpClientFactory httpClientFactory,IConnectionMultiplexer redis,
-            IHashids hashids,IOptions<SpotifyAccessKey> options,ILogger<SpotifyAuthHttpService> logger)
+        public SpotifyHttpService(IHttpClientFactory httpClientFactory,IConnectionMultiplexer redis,
+            IHashids hashids,IOptions<SpotifyAccessKey> options,ILogger<SpotifyHttpService> logger)
         {
             this.httpClientFactory = httpClientFactory;
             _redis = redis;
@@ -68,7 +68,11 @@ namespace Spotify.Services
             return new TokenResult() { Success=false};
         }
 
-       
+        public Task<TokenResult> GetStreamerAccessTokenAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<string> GetUserRefreshToken()
         {
             throw new NotImplementedException();

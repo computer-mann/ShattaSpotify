@@ -10,11 +10,11 @@ namespace Presentation.Spotify.HostedServices
     {
         //should go and get the latest tokens every 3580 seconds
         private readonly ILogger<RefreshAppTokenCoravelService> logger;
-        private readonly ISpotifyAuth auth;
+        private readonly ISpotifyHttpService auth;
 
 
         public RefreshAppTokenCoravelService(ILogger<RefreshAppTokenCoravelService> logger,
-            ISpotifyAuth auth)
+            ISpotifyHttpService auth)
         {
             this.logger = logger;
 
