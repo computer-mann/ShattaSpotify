@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
+namespace Domain.Spotify.Contracts.SpotifyApiResponseObjects
 {
-    public class GetTrackDto
+    public class GetTrackResponse
     {
 
         public Album album { get; set; }

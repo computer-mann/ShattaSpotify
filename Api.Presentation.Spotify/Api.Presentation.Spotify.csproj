@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -6,6 +6,7 @@
 		<Nullable>enable</Nullable>
 		<UserSecretsId>5f31aac3-fd9b-42e7-b557-0a88bd0d2f22</UserSecretsId>
 		<OutputType>Exe</OutputType>
+		<StartupObject>Api.Presentation.Spotify.Program</StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -75,5 +76,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Application.Spotify\Application.Spotify.csproj" />
 		<ProjectReference Include="..\Infrastructure.Spotify\Infrastructure.Spotify.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="MinimalEndpoints\" />
 	</ItemGroup>
 </Project>

@@ -1,39 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Application.Application.Spotify.Dtos.SpotifyApiResponseObjects
+
+namespace Domain.Spotify.Contracts.SpotifyApiResponseObjects
 {
-    // GetSearchQueryDto
-    public class GetSearchQueryDto
-    {
-        [JsonPropertyName("artists")]
-        public Artists Artists { get; set; }
-    }
-
-    public class Artists
-    {
-        [JsonPropertyName("href")]
-        public Uri Href { get; set; }
-
-        [JsonPropertyName("items")]
-        public List<Item> Items { get; set; }
-
-        [JsonPropertyName("limit")]
-        public long Limit { get; set; }
-
-        [JsonPropertyName("next")]
-        public Uri Next { get; set; }
-
-        [JsonPropertyName("offset")]
-        public long Offset { get; set; }
-
-        [JsonPropertyName("previous")]
-        public object Previous { get; set; }
-
-        [JsonPropertyName("total")]
-        public long Total { get; set; }
-    }
-
-    public class Item
+    public partial class Temperatures
     {
         [JsonPropertyName("external_urls")]
         public ExternalUrls ExternalUrls { get; set; }
@@ -66,13 +36,13 @@ namespace Application.Application.Spotify.Dtos.SpotifyApiResponseObjects
         public string Uri { get; set; }
     }
 
-    public class ExternalUrls
+    public partial class ExternalUrls
     {
         [JsonPropertyName("spotify")]
         public Uri Spotify { get; set; }
     }
 
-    public class Followers
+    public partial class Followers
     {
         [JsonPropertyName("href")]
         public object Href { get; set; }
@@ -81,7 +51,7 @@ namespace Application.Application.Spotify.Dtos.SpotifyApiResponseObjects
         public long Total { get; set; }
     }
 
-    public class Image
+    public partial class Image
     {
         [JsonPropertyName("height")]
         public long Height { get; set; }
@@ -92,6 +62,4 @@ namespace Application.Application.Spotify.Dtos.SpotifyApiResponseObjects
         [JsonPropertyName("width")]
         public long Width { get; set; }
     }
-
-
 }

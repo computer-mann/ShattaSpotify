@@ -1,4 +1,4 @@
-﻿namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
+﻿namespace Domain.Spotify.Contracts.SpotifyApiResponseObjects
 {
     public class GetArtistAlbum
     {

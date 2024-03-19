@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
+namespace Domain.Spotify.Contracts.SpotifyApiResponseObjects
 {
 
 
-    public class GetFollowedArtistDTO
+    public class GetFollowedArtistResponse
     {
         public Artists artists { get; set; }
        

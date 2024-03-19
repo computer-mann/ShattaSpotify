@@ -15,6 +15,7 @@ using Spotify.Configuration.SpotifyEndPoints;
 using Spotify.Configuration;
 using System.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using Api.Presentation.Spotify.CustomMiddlewares;
 
 namespace Api.Presentation.Spotify
 {
@@ -54,7 +55,8 @@ namespace Api.Presentation.Spotify
         }
         private static void ConfigureServices(IServiceCollection services,IConfiguration configuration)
         {
-           
+           services.AddExceptionHandler<GlobalExceptionHandlerMiddleWare>();
+            services.AddProblemDetails();
             FirebaseApp.Create(new AppOptions()
             {
                 Credential = GoogleCredential.FromFile("C:\\Users\\hpsn1\\OneDrive\\Documents\\Projects\\cmfirstapp-1941d-firebase-adminsdk-60ady-1258ed7d20.json"),
@@ -111,7 +113,8 @@ namespace Api.Presentation.Spotify
         }
         private static void Configure(WebApplication app)
         {
-            app.UseHsts();
+            
+            app.UseExceptionHandler();
             //app.UseForwardedHeaders(new ForwardedHeadersOptions
             //{
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

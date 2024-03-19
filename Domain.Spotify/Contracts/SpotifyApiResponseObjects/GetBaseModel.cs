@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
+namespace Domain.Spotify.Contracts.SpotifyApiResponseObjects
 {
     public class GetBaseModel
     {

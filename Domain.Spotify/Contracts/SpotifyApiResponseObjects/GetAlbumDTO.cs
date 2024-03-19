@@ -1,6 +1,6 @@
-﻿namespace Application.Spotify.Dtos.SpotifyApiResponseObjects
+﻿namespace Domain.Spotify.Contracts.SpotifyApiResponseObjects
 {
-    public class GetAlbumDTO
+    public class GetAlbumResponse
     {
         public string album_type { get; set; }
         public Artist[] artists { get; set; }

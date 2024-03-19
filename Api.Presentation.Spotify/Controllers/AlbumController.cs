@@ -1,6 +1,8 @@
 ﻿using FirebaseAdmin.Auth;
+using Google.Apis.Logging;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Spotify.Controllers
 {
@@ -9,10 +11,12 @@ namespace Spotify.Controllers
     public class AlbumController : ControllerBase
     {
         private readonly IHashids hashids;
+        private readonly ILogger<AlbumController> _logger;
 
-        public AlbumController(IHashids hashids)
+        public AlbumController(IHashids hashids, ILogger<AlbumController> logger)
         {
             this.hashids = hashids;
+            _logger = logger;
         }
         [HttpGet]
         public IActionResult Index()
@@ -26,7 +30,7 @@ namespace Spotify.Controllers
         {
             UserRecordArgs args = new UserRecordArgs()
             {
-                Email = "phnunoo83@example.com",
+                Email = "phnunoo8311@example.com",
                 EmailVerified = false,
                 PhoneNumber = "+11234567890",
                 Password = "secretPassword",
@@ -40,14 +44,21 @@ namespace Spotify.Controllers
                 return Ok(userRecord);
             }catch(FirebaseAuthException e)
             {
-                return BadRequest(e.Message);
+                _logger.LogError(e, "Firebase Exception");
+                return BadRequest(new ProblemDetails()
+                {
+                    Title ="Authentication Problem",
+                    Detail=e.Message
+                });
             }
             catch (ArgumentNullException e)
             {
+                _logger.LogError(e, "Firebase Exception");
                 return BadRequest(e.Message);
             }
             catch (ArgumentException e)
             {
+                _logger.LogError(e, "Firebase Exception");
                 return BadRequest(e.Message);
             }
             
