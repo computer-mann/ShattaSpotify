@@ -66,32 +66,11 @@ namespace Domain.Spotify.Contracts.SpotifyApiResponseObjects
         public string Uri { get; set; }
     }
 
-    public class ExternalUrls
-    {
-        [JsonPropertyName("spotify")]
-        public Uri Spotify { get; set; }
-    }
+ 
 
-    public class Followers
-    {
-        [JsonPropertyName("href")]
-        public object Href { get; set; }
 
-        [JsonPropertyName("total")]
-        public long Total { get; set; }
-    }
 
-    public class Image
-    {
-        [JsonPropertyName("height")]
-        public long Height { get; set; }
-
-        [JsonPropertyName("url")]
-        public Uri Url { get; set; }
-
-        [JsonPropertyName("width")]
-        public long Width { get; set; }
-    }
+   
 
 
 }

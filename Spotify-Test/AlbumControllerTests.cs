@@ -1,18 +1,21 @@
 using FluentAssertions;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute.ExceptionExtensions;
+using Spotify.Controllers;
 
 namespace Spotify_Test
 {
     public class AlbumControllerTests
     {
         private readonly IHashids hashidsMock = Substitute.For<IHashids>();
+        private readonly ILogger<AlbumController> logger = Substitute.For<ILogger<AlbumController>>();
         private readonly AlbumController sut;
 
         public AlbumControllerTests()
         {
-            sut = new AlbumController(hashidsMock);
+            sut = new AlbumController(hashidsMock,logger);
         }
 
         [SetUp]

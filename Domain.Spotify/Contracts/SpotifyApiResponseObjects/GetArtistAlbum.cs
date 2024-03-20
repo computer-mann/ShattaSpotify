@@ -41,13 +41,5 @@
             public string type { get; set; }
             public string uri { get; set; }
         }
-
-        public class Image
-        {
-            public int height { get; set; }
-            public string url { get; set; }
-            public int width { get; set; }
-        }
-
     }
 }

@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Spotify.Services
 {
-    //this will have the non-user(client) token see
-    // the authorization flows
+    //this will have the authorization flows for getting both client and user tokens
 
     public class SpotifyHttpService : ISpotifyHttpService
     {

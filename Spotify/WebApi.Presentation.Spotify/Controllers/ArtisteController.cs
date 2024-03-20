@@ -1,10 +1,10 @@
-﻿using Application.Application.Spotify.Dtos.SpotifyApiResponseObjects;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Spotify.Configuration.SpotifyEndPoints;
 using Spotify.Models;
 using StackExchange.Redis;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using Domain.Spotify.Contracts.SpotifyApiResponseObjects;
 
 namespace Spotify.Controllers
 {
@@ -27,7 +27,7 @@ namespace Spotify.Controllers
             var result=await _httpClient.GetAsync(SearchArtistUrls.SearchforItem+name);
             if (result.IsSuccessStatusCode)
             {
-                var json = JsonSerializer.Deserialize<GetSearchQueryDto>(await result.Content.ReadAsStringAsync());
+                var json = JsonSerializer.Deserialize<GetSearchQueryResponse>(await result.Content.ReadAsStringAsync());
                 var item = json.Artists.Items.First();
                 return Ok(new Artist(item.Id,item.Name,item.Images.First().Url.ToString()));
             }

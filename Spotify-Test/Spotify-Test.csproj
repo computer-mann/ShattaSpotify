@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api.Presentation.Spotify\Api.Presentation.Spotify.csproj" />
+    <ProjectReference Include="..\Spotify\WebApi.Presentation.Spotify\WebApi.Presentation.Spotify.csproj" />
   </ItemGroup>
 
 </Project>
