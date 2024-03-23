@@ -12,12 +12,12 @@ namespace Presentation.Spotify.HostedServices
     public class CheckNewReleasesHostedService : IInvocable
     {
         private readonly ILogger<CheckNewReleasesHostedService> logger;
-        private readonly IConnectionMultiplexer redis;
+       // private readonly IConnectionMultiplexer redis;
 
-        public CheckNewReleasesHostedService(ILogger<CheckNewReleasesHostedService> logger, IConnectionMultiplexer redis)
+        public CheckNewReleasesHostedService(ILogger<CheckNewReleasesHostedService> logger)
         {
             this.logger = logger;
-            this.redis = redis;
+            
         }
 
         public Task Invoke()

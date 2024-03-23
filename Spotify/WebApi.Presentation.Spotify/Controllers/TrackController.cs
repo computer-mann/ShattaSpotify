@@ -10,7 +10,7 @@ namespace Spotify.Controllers
     public class TrackController : ControllerBase
     {
         private readonly ITopicProducer<KafkaTestMessage> _topicProducer;
-        private readonly ITopic
+        
 
         public TrackController(ITopicProducer<KafkaTestMessage> topicProducer)
         {

@@ -12,7 +12,7 @@ namespace Presentation.Spotify.HostedServices
         }
         public Task Invoke()
         {
-            _logger.LogInformation("GoogleNotificationHostedService");
+            _logger.LogInformation("WeeklyDbSongClearanceHostedService");
             return Task.CompletedTask;
         }
     }

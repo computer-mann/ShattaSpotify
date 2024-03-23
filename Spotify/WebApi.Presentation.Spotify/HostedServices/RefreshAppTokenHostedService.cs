@@ -10,15 +10,12 @@ namespace Presentation.Spotify.HostedServices
     {
         //should go and get the latest tokens every 3580 seconds
         private readonly ILogger<RefreshAppTokenCoravelService> logger;
-        private readonly ISpotifyHttpService auth;
+       // private readonly ISpotifyHttpService auth;
 
 
-        public RefreshAppTokenCoravelService(ILogger<RefreshAppTokenCoravelService> logger,
-            ISpotifyHttpService auth)
+        public RefreshAppTokenCoravelService(ILogger<RefreshAppTokenCoravelService> logger)
         {
             this.logger = logger;
-
-            this.auth = auth;
         }
 
         public async Task Invoke()
@@ -30,16 +27,16 @@ namespace Presentation.Spotify.HostedServices
 
         private async Task SeekHourlyTokens()
         {
-            var result = await auth.GetClientAccessTokenAsync();
-            if (result.Success)
-            {
-                logger.LogInformation("Successfully put client access token into cache");
-            }
-            else
-            {
-                //make better logs
-                logger.LogWarning("Something bad happened:");
-            }
+            //var result = await auth.GetClientAccessTokenAsync();
+            //if (result.Success)
+            //{
+            //    logger.LogInformation("Successfully put client access token into cache");
+            //}
+            //else
+            //{
+            //    make better logs
+            //    logger.LogWarning("Something bad happened:");
+            //}
         }
     }
 }

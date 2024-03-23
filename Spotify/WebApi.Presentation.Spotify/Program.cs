@@ -16,6 +16,8 @@ using Spotify.Configuration;
 using System.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Api.Presentation.Spotify.CustomMiddlewares;
+using Spotify.CustomMiddlewares;
+using Presentation.Spotify.HostedServices;
 
 namespace Api.Presentation.Spotify
 {
@@ -56,6 +58,10 @@ namespace Api.Presentation.Spotify
         private static void ConfigureServices(IServiceCollection services,IConfiguration configuration)
         {
            services.AddExceptionHandler<GlobalExceptionHandlerMiddleWare>();
+            services.AddTransient<WeeklyDbSongClearanceHostedService>();
+            services.AddTransient<RefreshAppTokenCoravelService>();
+            services.AddTransient<CheckNewReleasesHostedService>();
+            services.AddTransient<GoogleNotificationHostedService>();
             services.AddProblemDetails();
             FirebaseApp.Create(new AppOptions()
             {
@@ -77,16 +83,8 @@ namespace Api.Presentation.Spotify
             services.AddKafkaProducer();
             /*  var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);
               services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-               services.AddTransient<RefreshAppTokenCoravelService>();
              services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();
 
-              var sqlVersion = new MySqlServerVersion(new Version(8, 0, 28));
-              string connectionString = Configuration.GetConnectionString("mysql");
-              services.AddDbContext<SpotifyDbContexts>(options =>
-              {
-
-                  options.UseMySql(connectionString, sqlVersion);
-              });
               services.AddDbContext<AuthDbContext>(options =>
               {
                   options.UseMySql(connectionString, sqlVersion);
@@ -121,7 +119,7 @@ namespace Api.Presentation.Spotify
             //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             //});
 
-            //app.UseCoravelSchedulingServices();
+            app.UseCoravelSchedulingServices();
 
             app.UseSerilogRequestLogging();
             if (app.Environment.IsDevelopment())
