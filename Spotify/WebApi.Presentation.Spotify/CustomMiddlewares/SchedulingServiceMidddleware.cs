@@ -1,32 +1,28 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Coravel;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Presentation.Spotify.HostedServices;
 using System.Globalization;
 
 namespace Spotify.CustomMiddlewares
 {
     public class SchedulingServiceMidddleware
     {
-        private readonly RequestDelegate _next;
 
-        public SchedulingServiceMidddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
-
-        public async Task InvokeAsync(HttpContext context)
-        {
-            
-
-            // Call the next delegate/middleware in the pipeline.
-            await _next(context);
-        }
     }
-
     public static class SchedulingServiceMidddlewareExtension
     {
-        public static IApplicationBuilder UseSchedulingService(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCoravelSchedulingServices(this IApplicationBuilder app)
         {
-            return app.UseMiddleware<SchedulingServiceMidddleware>();
+            var provider = app.ApplicationServices;
+            provider.UseScheduler(schedulers =>
+            {
+                schedulers.Schedule<RefreshAppTokenCoravelService>().Hourly().RunOnceAtStart();
+                schedulers.Schedule(() => Console.WriteLine("Every second of the app running.")).EveryTenSeconds().RunOnceAtStart();
+
+            });
+            return app;
         }
+        
     }
 }

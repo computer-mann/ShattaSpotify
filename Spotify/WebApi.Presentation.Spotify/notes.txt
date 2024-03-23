@@ -12,3 +12,9 @@ in my specific case:
 
  How do i differentiate between an album, and a single.
  featured and lead artiste
+
+
+ 1. background service to continuosly go and get new info from api.spotify and publish to kafka
+ 1a. kafka consumer to consume the data then transform into whatever i want then store in db
+ 2. background service to send notifications at 5am in the morning everday bases on what is in the db 
+ 3. background service to clean up greater than a week's old data in the database
