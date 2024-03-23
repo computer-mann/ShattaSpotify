@@ -4,9 +4,16 @@ namespace Presentation.Spotify.HostedServices
 {
     public class WeeklyDbSongClearanceHostedService : IInvocable
     {
+        private readonly ILogger<WeeklyDbSongClearanceHostedService> _logger;
+
+        public WeeklyDbSongClearanceHostedService(ILogger<WeeklyDbSongClearanceHostedService> logger)
+        {
+            _logger = logger;
+        }
         public Task Invoke()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("GoogleNotificationHostedService");
+            return Task.CompletedTask;
         }
     }
 }

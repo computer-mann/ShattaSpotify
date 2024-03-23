@@ -22,7 +22,8 @@ namespace Presentation.Spotify.HostedServices
 
         public Task Invoke()
         {
-            throw new NotImplementedException();
+            logger.LogInformation("CheckNewReleasesHostedService");
+            return Task.CompletedTask;
         }
     }
 }
