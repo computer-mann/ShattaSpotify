@@ -8,3 +8,7 @@ in my specific case:
 
  some endpoints need only developer auth token
  some need user's auth too
+
+
+ How do i differentiate between an album, and a single.
+ featured and lead artiste

@@ -74,6 +74,7 @@ namespace Api.Presentation.Spotify
             services.Configure<SpotifyAccessKey>(configuration.GetSection("Spotify"));
             services.Configure<JwtParams>(configuration.GetSection("JWT"));
             services.AddSingleton<IHashids>(new Hashids(configuration.GetSection("HashId:Salt").Value, 5));
+            services.AddKafkaProducer();
             /*  var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);
               services.AddSingleton<IConnectionMultiplexer>(multiplexer);
                services.AddTransient<RefreshAppTokenCoravelService>();
