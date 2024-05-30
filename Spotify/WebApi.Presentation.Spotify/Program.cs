@@ -87,7 +87,7 @@ namespace Api.Presentation.Spotify
 
               services.AddDbContext<AuthDbContext>(options =>
               {
-                  options.UseMySql(connectionString, sqlVersion);
+                  
               });*/
 
             // services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
