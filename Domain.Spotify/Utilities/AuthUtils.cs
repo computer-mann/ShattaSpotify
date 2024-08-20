@@ -22,7 +22,7 @@ namespace Spotify.Utilities
             var finalString = new String(stringChars);
             return finalString;
         }
-        public string GenerateJWToken(string email, string display_name, JwtParams jwtParams)
+        public string GenerateJWToken(string email, string display_name, JwtParamOptions jwtParams)
         {
             var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtParams.Key));
             var myIssuer = jwtParams.Issuer;
@@ -47,7 +47,7 @@ namespace Spotify.Utilities
 
     public interface IAuthUtils
     {
-        public string GenerateJWToken(string email, string display_name, JwtParams jwtParams);
+        public string GenerateJWToken(string email, string display_name, JwtParamOptions jwtParams);
         public string RandomStringGenerator();
     }
 }

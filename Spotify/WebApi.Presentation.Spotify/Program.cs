@@ -63,11 +63,11 @@ namespace Api.Presentation.Spotify
             services.AddTransient<CheckNewReleasesHostedService>();
             services.AddTransient<GoogleNotificationHostedService>();
             services.AddProblemDetails();
-            FirebaseApp.Create(new AppOptions()
-            {
-                Credential = GoogleCredential.FromFile("C:\\Users\\hpsn1\\OneDrive\\Documents\\Projects\\cmfirstapp-1941d-firebase-adminsdk-60ady-1258ed7d20.json"),
-                ProjectId = "cmfirstapp-1941d"
-            });
+            //FirebaseApp.Create(new AppOptions()
+            //{
+            //    Credential = GoogleCredential.FromFile("D:\\Projects\\Projects\\cmfirstapp-1941d-firebase-adminsdk-60ady-1258ed7d20.json"),
+            //    ProjectId = "cmfirstapp-1941d"
+            //});
 
             services.AddControllers();
             // services.AddEndpointsApiExplorer();
@@ -77,8 +77,9 @@ namespace Api.Presentation.Spotify
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHttpClient();
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.Configure<SpotifyAccessKey>(configuration.GetSection("Spotify"));
-            services.Configure<JwtParams>(configuration.GetSection("JWT"));
+            services.AddOptions<SpotifyAccessKey>().Bind(configuration.GetSection("SpotifyAccessKey")).ValidateDataAnnotations().ValidateOnStart();
+            services.AddOptions<JwtParamOptions>().Bind(configuration.GetSection("JwtParamOptions")).ValidateDataAnnotations().ValidateOnStart();
+           
             services.AddSingleton<IHashids>(new Hashids(configuration.GetSection("HashId:Salt").Value, 5));
             services.AddKafkaProducer();
             /*  var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);

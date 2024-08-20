@@ -33,13 +33,13 @@ namespace Presentation.Spotify.Controllers
         private readonly SpotifyAccessKey spotifyAccessKey;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConnectionMultiplexer multiplexer;
-        private readonly JwtParams jwtParams;
+        private readonly JwtParamOptions jwtParams;
         private readonly UserManager<Streamer> userManager;
         private readonly IAuthUtils authUtils;
 
         public WebAuthController(ISpotifyHttpService spotifyAuth, ILogger<WebAuthController> _logger,
             IOptions<SpotifyAccessKey> options, IHttpClientFactory httpClient, IConnectionMultiplexer connection,
-            IOptions<JwtParams> options1, UserManager<Streamer> userManager, IAuthUtils authUtils)
+            IOptions<JwtParamOptions> options1, UserManager<Streamer> userManager, IAuthUtils authUtils)
         {
             this.spotifyAuth = spotifyAuth;
             this._logger = _logger;
@@ -55,15 +55,15 @@ namespace Presentation.Spotify.Controllers
         [HttpGet("/web/login")]
         public async Task<IActionResult> SpotifyWebLogin()
         {
-            var rString = authUtils.RandomStringGenerator();
+            var randomString = authUtils.RandomStringGenerator();
             _logger.LogInformation("Attempting to login user");
             NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
             queryString.Add("response_type", "code");
             queryString.Add("client_id", spotifyAccessKey.ClientId);
             queryString.Add("scope", $"{AuthorizationScopes.UserReadEmail} {AuthorizationScopes.UserReadPrivate} {AuthorizationScopes.PlaylistReadPrivate} {AuthorizationScopes.PlaylistReadCollaborative}");
             queryString.Add("redirect_uri", spotifyAccessKey.RedirectUri);
-            queryString.Add("state", rString);
-            var result = await LocalStringSetAsync(rString, "1", "randomgenerator", TimeSpan.FromSeconds(20));
+            queryString.Add("state", randomString);
+            var result = await LocalStringSetAsync(randomString, "1", "randomgenerator", TimeSpan.FromSeconds(20));
             if (result)
             {
                 return Redirect("https://accounts.spotify.com/authorize?" + queryString.ToString());
