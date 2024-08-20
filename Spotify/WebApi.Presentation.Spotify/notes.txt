@@ -21,3 +21,5 @@ in my specific case:
 
 
  ssh -i "spotify_integration_dont_commit.pem" ubuntu@ec2-18-175-255-78.eu-west-2.compute.amazonaws.com
+
+ dotnet publish -c Release -o publish --os linux --no-self-contained
