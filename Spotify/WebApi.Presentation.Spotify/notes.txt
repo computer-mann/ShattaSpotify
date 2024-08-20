@@ -20,4 +20,4 @@ in my specific case:
  3. background service to clean up greater than a week's old data in the database
 
 
- ssh -i "spotify_integration_dont_commit.pem"
+ ssh -i "spotify_integration_dont_commit.pem" ubuntu@ec2-18-175-255-78.eu-west-2.compute.amazonaws.com
