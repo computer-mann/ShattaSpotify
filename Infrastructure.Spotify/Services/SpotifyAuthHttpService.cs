@@ -41,13 +41,13 @@ namespace Spotify.Services
                 logger.LogInformation("Client Access token has not expired. Skipping new request to Spotify");
                 return new TokenResult() { AccessToken=accessKey};
             }
-            var httpContent = new FormUrlEncodedContent(new Dictionary<string, string> { { "grant_type", "client_credentials" } });
+            var formUrlEncodedContent = new FormUrlEncodedContent(new Dictionary<string, string> { { "grant_type", "client_credentials" } });
             var http = httpClientFactory.CreateClient();
             var bytes = Encoding.UTF8.GetBytes($"{spotifyAccessKey.ClientId}:{spotifyAccessKey.ClientSecret}");
             var encodedkeys = WebEncoders.Base64UrlEncode(bytes);
             http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedkeys);
 
-            var result = await http.PostAsync(SpotifyUrls.TokenEndpoint, httpContent);
+            var result = await http.PostAsync(SpotifyUrls.TokenEndpoint, formUrlEncodedContent);
             if (result.IsSuccessStatusCode)
             {
                 var tokenResult = JsonSerializer.Deserialize<TokenResult>(await result.Content.ReadAsStringAsync());

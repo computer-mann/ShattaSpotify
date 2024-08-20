@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	  <UserSecretsId>5f31aac3-fd9b-42e7-b557-0a88bd0d2f22</UserSecretsId>
@@ -28,6 +28,7 @@
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.3" />
+	  <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.0.0" />
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
 	  <PackageReference Include="Npgsql.OpenTelemetry" Version="8.0.2" />
 	  <PackageReference Include="OpenTelemetry" Version="1.7.0" />

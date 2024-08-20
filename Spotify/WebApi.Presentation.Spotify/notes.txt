@@ -18,3 +18,6 @@ in my specific case:
  1a. kafka consumer to consume the data then transform into whatever i want then store in db
  2. background service to send notifications at 5am in the morning everday bases on what is in the db 
  3. background service to clean up greater than a week's old data in the database
+
+
+ ssh -i "spotify_integration_dont_commit.pem"
