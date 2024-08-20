@@ -20,6 +20,22 @@ in my specific case:
  3. background service to clean up greater than a week's old data in the database
 
 
- ssh -i "spotify_integration_dont_commit.pem" ubuntu@ec2-18-175-255-78.eu-west-2.compute.amazonaws.com
+ ssh -i "D:\Projects\dotnet\SpotifySln\spotify_integration_dont_commit.pem" ubuntu@ec2-18-175-255-78.eu-west-2.compute.amazonaws.com
 
  dotnet publish -c Release -o publish --os linux --no-self-contained
+
+ scp -i "D:\Projects\dotnet\SpotifySln\spotify_integration_dont_commit.pem" D:\Projects\dotnet\SpotifySln\Spotify\WebApi.Presentation.Spotify\publish.rar ubuntu@ec2-18-175-255-78.eu-west-2.compute.amazonaws.com:/home/ubuntu/spotify_publish
+
+
+ curl -Lo dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/bdb8a419-432c-4f1c-b5ad-ae6e27617b5c/65b26a64e3dda62c456a7a45df73dc1e/aspnetcore-runtime-9.0.0-preview.7.24406.2-linux-x64.tar.gz
+mkdir dotnet
+tar -C dotnet -xf dotnet.tar.gz
+rm dotnet.tar.gz
+export DOTNET_ROOT=~/dotnet
+export PATH=$PATH:~/dotnet
+dotnet --version
+9.0.100-preview.2.24157.14
+
+tar -C . -xf dotnet.tar.gz
+
+unrar x publish.rar
