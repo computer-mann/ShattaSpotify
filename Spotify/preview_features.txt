@@ -1,0 +1,4 @@
+dotnet 9 features:
+
+- ef core new metrics
+- hybrid cache

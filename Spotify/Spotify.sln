@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		WebApi.Presentation.Spotify\notes.txt = WebApi.Presentation.Spotify\notes.txt
 		PERSONAL_NOTES.MD = PERSONAL_NOTES.MD
+		preview_features.txt = preview_features.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Spotify", "..\Domain.Spotify\Domain.Spotify.csproj", "{7CA4E8FF-86CB-48E5-A72F-C2298C7DA325}"
