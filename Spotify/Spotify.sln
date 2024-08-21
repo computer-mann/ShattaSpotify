@@ -21,13 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Spotify", "..\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Presentation.Spotify", "WebApi.Presentation.Spotify\WebApi.Presentation.Spotify.csproj", "{4867FEF0-0C13-4628-96EE-3F52479A4D80}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{17C5B112-74A4-487E-9FE6-0DEEC8D7C524}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0AF458CF-524F-4D7F-A1E0-BEDCE34F0DA3}"
-	ProjectSection(SolutionItems) = preProject
-		integrate.yml = integrate.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,9 +50,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{0AF458CF-524F-4D7F-A1E0-BEDCE34F0DA3} = {17C5B112-74A4-487E-9FE6-0DEEC8D7C524}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C3E0D965-F087-4525-80F5-D93E9B7C4289}
