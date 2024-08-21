@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Spotify", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Spotify", "..\Application.Spotify\Application.Spotify.csproj", "{75BE66E9-3C4D-4DF6-B919-DE8E949AA2C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Presentation.Spotify", "WebApi.Presentation.Spotify\WebApi.Presentation.Spotify.csproj", "{4867FEF0-0C13-4628-96EE-3F52479A4D80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.Spotify", "WebApi.Presentation.Spotify\Presentation.Spotify.csproj", "{4867FEF0-0C13-4628-96EE-3F52479A4D80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
