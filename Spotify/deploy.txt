@@ -1,0 +1,1 @@
+build and publish the project into /publish folder

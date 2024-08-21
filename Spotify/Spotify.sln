@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spotify-Test", "..\Spotify-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EADBEB5F-C33F-4E92-9406-7D17006C0787}"
 	ProjectSection(SolutionItems) = preProject
+		deploy.txt = deploy.txt
 		WebApi.Presentation.Spotify\notes.txt = WebApi.Presentation.Spotify\notes.txt
 		PERSONAL_NOTES.MD = PERSONAL_NOTES.MD
 		preview_features.txt = preview_features.txt
@@ -19,6 +20,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Spotify", "..\Application.Spotify\Application.Spotify.csproj", "{75BE66E9-3C4D-4DF6-B919-DE8E949AA2C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Presentation.Spotify", "WebApi.Presentation.Spotify\WebApi.Presentation.Spotify.csproj", "{4867FEF0-0C13-4628-96EE-3F52479A4D80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{17C5B112-74A4-487E-9FE6-0DEEC8D7C524}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0AF458CF-524F-4D7F-A1E0-BEDCE34F0DA3}"
+	ProjectSection(SolutionItems) = preProject
+		integrate.yml = integrate.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +57,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0AF458CF-524F-4D7F-A1E0-BEDCE34F0DA3} = {17C5B112-74A4-487E-9FE6-0DEEC8D7C524}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C3E0D965-F087-4525-80F5-D93E9B7C4289}
