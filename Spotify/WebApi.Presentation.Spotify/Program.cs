@@ -56,12 +56,13 @@ namespace Api.Presentation.Spotify
         }
         private static void ConfigureServices(IServiceCollection services,IConfiguration configuration)
         {
-           services.AddExceptionHandler<GlobalExceptionHandlerMiddleWare>();
+            services.AddExceptionHandler<GlobalExceptionHandlerMiddleWare>();
+            services.AddProblemDetails();
             services.AddTransient<WeeklyDbSongClearanceHostedService>();
             services.AddTransient<RefreshAppTokenCoravelService>();
             services.AddTransient<CheckNewReleasesHostedService>();
             services.AddTransient<GoogleNotificationHostedService>();
-            services.AddProblemDetails();
+            
             //FirebaseApp.Create(new AppOptions()
             //{
             //    Credential = GoogleCredential.FromFile("D:\\Projects\\Projects\\cmfirstapp-1941d-firebase-adminsdk-60ady-1258ed7d20.json"),
