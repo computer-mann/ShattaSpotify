@@ -1,9 +1,10 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Domain.Spotify.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Domain.Spotify.Utilities
+namespace Infrastructure.Spotify.Utilities
 {
     public class AuthUtils:IAuthUtils
     {    

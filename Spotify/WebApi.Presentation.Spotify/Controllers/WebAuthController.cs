@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Spotify.Configuration;
+using Domain.Spotify.Database.Entities;
+using Domain.Spotify.Options;
+using Infrastructure.Spotify.Utilities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Spotify.Services.Interfaces;
 using StackExchange.Redis;
 using System.Collections.Specialized;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 using System.Web;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Presentation.Spotify.Controllers
 {
@@ -21,16 +19,16 @@ namespace Presentation.Spotify.Controllers
     {
         private readonly ILogger<WebAuthController> _logger;
         private readonly ISpotifyHttpService spotifyAuth;
-        private readonly SpotifyAccessKey spotifyAccessKey;
+        private readonly SpotifyAccessConfig spotifyAccessKey;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConnectionMultiplexer multiplexer;
         private readonly JwtParamOptions jwtParams;
-        private readonly UserManager<Streamer> userManager;
+        private readonly UserManager<AudioUser> userManager;
         private readonly IAuthUtils authUtils;
 
         public WebAuthController(ISpotifyHttpService spotifyAuth, ILogger<WebAuthController> _logger,
-            IOptions<SpotifyAccessKey> options, IHttpClientFactory httpClient, IConnectionMultiplexer connection,
-            IOptions<JwtParamOptions> options1, UserManager<Streamer> userManager, IAuthUtils authUtils)
+            IOptions<SpotifyAccessConfig> options, IHttpClientFactory httpClient, IConnectionMultiplexer connection,
+            IOptions<JwtParamOptions> options1, UserManager<AudioUser> userManager, IAuthUtils authUtils)
         {
             this.spotifyAuth = spotifyAuth;
             this._logger = _logger;
@@ -66,68 +64,7 @@ namespace Presentation.Spotify.Controllers
         [HttpGet("/web/callback")]
         public async Task<IActionResult> SpotifyAuthCallback(string code, string state, string error)
         {
-            var returnUrl = "http://localhost:4200";
-            if (!string.IsNullOrEmpty(error) || string.IsNullOrEmpty(await LocalStringGetAsync("randomgenerator" + state)))
-            {
-                return Redirect($"{returnUrl}/login/error");
-            }
-            Dictionary<string, string> form = new Dictionary<string, string>
-            {
-                { "code", code },
-                { "state", state },
-                { "grant_type", "authorization_code" },
-                { "redirect_uri", spotifyAccessKey.RedirectUri }
-            };
-            var bytes = Encoding.UTF8.GetBytes($"{spotifyAccessKey.ClientId}:{spotifyAccessKey.ClientSecret}");
-            var encodedkeys = WebEncoders.Base64UrlEncode(bytes);
-            var formContent = new FormUrlEncodedContent(form);
-            var http = _httpClientFactory.CreateClient();
-            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedkeys);
-            var spotifyTokenResult = await http.PostAsync("https://accounts.spotify.com/api/token", formContent);
-            if (spotifyTokenResult.IsSuccessStatusCode)
-            {
-                //after getting the spotify token,get the email,username,put in a db and put it in a cache
-                var serializedSpotifyToken = JsonSerializer.Deserialize<TokenResult>(await spotifyTokenResult.Content.ReadAsStringAsync());
-                var userDataRequest = _httpClientFactory.CreateClient();
-                userDataRequest.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", serializedSpotifyToken.AccessToken);
-                var profileResult = await userDataRequest.GetAsync("https://api.spotify.com/v1/me");
-                if (profileResult.IsSuccessStatusCode)
-                {
-                    var userInfo = JsonSerializer.Deserialize<UserProfileInfo>(await profileResult.Content.ReadAsStringAsync());
-                    var userManagerResult = await userManager.CreateAsync(new Streamer()
-                    {
-                        Email = userInfo.Email,
-                        UserName = userInfo.DisplayName
-                    });
-                    if (userManagerResult.Succeeded)
-                    {
-                        if (await LocalStringSetAsync(userInfo.Email, serializedSpotifyToken.AccessToken, "spotifytoken", TimeSpan.FromMinutes(60)))
-                        {
-                            //Generate the jwt token
-                            var myJwToken = authUtils.GenerateJWToken(userInfo.Email, userInfo.DisplayName, jwtParams);
-                            return Redirect($"{returnUrl}/login?token=" + myJwToken);
-                        }
-                        else
-                        {
-                            _logger.LogError("Could not put user into Cache.");
-                            return BadRequest(new { message = "Could not Log in. Something went Wrong" });
-                        }
-                    }
-                    else
-                    {
-                        _logger.LogError("Could not put user into Database");
-                        return BadRequest(new { message = "Could not Log in." });
-                    }
-                }
-                return BadRequest(new { message = "Could not Log in." });
-            }
-            else
-            {
-                _logger.LogWarning("{Code} was return with Message {Message}", spotifyTokenResult.StatusCode, spotifyTokenResult.Content.ReadAsStringAsync().Result);
-                return BadRequest(new { message = "Could not Log in." });
-            }
-
-
+            return Ok();
         }
 
 

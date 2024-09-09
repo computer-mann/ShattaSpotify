@@ -1,7 +1,9 @@
 ﻿using Confluent.Kafka;
 using Infrastructure.Spotify.BrokerConfiguration;
 using MassTransit;
+using Redis.OM;
 using Spotify.Services;
+using StackExchange.Redis;
 
 namespace Api.Presentation.Spotify.CustomMiddlewares
 {
@@ -27,11 +29,15 @@ namespace Api.Presentation.Spotify.CustomMiddlewares
                     });
                     ride.UsingKafka((context, k) => 
                     {
-                        k.Host(["localhost:8099", "localhost:8097", "localhost:8098"]);
+                        k.Host(["localhost:9092"]);
                         
                     });
                 });
             });
+        }
+        public static void AddRedisOm(this IServiceCollection services,IConfiguration configuration)
+        {
+            services.AddSingleton<RedisConnectionProvider>(new RedisConnectionProvider(configuration.GetSection("Redis").Value!));
         }
     }
 }
