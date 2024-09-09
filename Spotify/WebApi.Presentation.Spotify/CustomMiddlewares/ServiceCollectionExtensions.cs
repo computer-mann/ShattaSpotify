@@ -1,7 +1,9 @@
 ﻿using Confluent.Kafka;
 using Infrastructure.Spotify.BrokerConfiguration;
+using Infrastructure.Spotify.Services;
 using MassTransit;
 using Redis.OM;
+using Redis.OM.Contracts;
 using Spotify.Services;
 using StackExchange.Redis;
 
@@ -11,7 +13,7 @@ namespace Api.Presentation.Spotify.CustomMiddlewares
     {
         public static void AddTypedHttpClients(this IServiceCollection services)
         {
-            services.AddHttpClient<SpotifyHttpService>();
+           // services.AddHttpClient<SpotifyHttpService>();
 
         }
         public static void AddKafkaProducer(this IServiceCollection services)
@@ -37,7 +39,7 @@ namespace Api.Presentation.Spotify.CustomMiddlewares
         }
         public static void AddRedisOm(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddSingleton<RedisConnectionProvider>(new RedisConnectionProvider(configuration.GetSection("Redis").Value!));
+            services.AddSingleton<IRedisConnectionProvider>(new RedisConnectionProvider(configuration.GetConnectionString("Redis")!));
         }
     }
 }

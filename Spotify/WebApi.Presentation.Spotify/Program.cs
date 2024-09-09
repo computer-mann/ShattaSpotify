@@ -4,6 +4,8 @@ using Serilog;
 using Api.Presentation.Spotify.CustomMiddlewares;
 using Spotify.CustomMiddlewares;
 using Presentation.Spotify.HostedServices;
+using Domain.Spotify.Configuration;
+using Domain.Spotify.Options;
 
 namespace Api.Presentation.Spotify
 {
@@ -64,7 +66,7 @@ namespace Api.Presentation.Spotify
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHttpClient();
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.AddOptions<SpotifyAccessKey>().Bind(configuration.GetSection("SpotifyAccessKey")).ValidateDataAnnotations().ValidateOnStart();
+            services.AddOptions<SpotifyAccessConfig>().Bind(configuration.GetSection("SpotifyAccessKey")).ValidateDataAnnotations().ValidateOnStart();
             services.AddOptions<JwtParamOptions>().Bind(configuration.GetSection("JwtParamOptions")).ValidateDataAnnotations().ValidateOnStart();
            
             services.AddSingleton<IHashids>(new Hashids(configuration.GetSection("HashId:Salt").Value, 5));

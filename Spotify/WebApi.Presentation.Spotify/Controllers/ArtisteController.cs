@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SpotifyAPI.Web;
 using StackExchange.Redis;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -20,17 +21,8 @@ namespace Spotify.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> Index(string name)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", (await _database.StringGetAsync("clientAccessKey")).ToString());
-            var result=await _httpClient.GetAsync(SearchArtistUrls.SearchforItem+name);
-            if (result.IsSuccessStatusCode)
-            {
-                var json = JsonSerializer.Deserialize<GetSearchQueryResponse>(await result.Content.ReadAsStringAsync());
-                var item = json.Artists.Items.First();
-                return Ok(new Artist(item.Id,item.Name,item.Images.First().Url.ToString()));
-            }
-            //add a global cache data exception
-            //return the artist name,id, and pic
-            return BadRequest(result.ReasonPhrase);
+            
+            return BadRequest();
         }
     }
 }

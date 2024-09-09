@@ -61,4 +61,8 @@
     <ProjectReference Include="..\..\Infrastructure.Spotify\Infrastructure.Spotify.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

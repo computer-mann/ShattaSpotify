@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Spotify.Models
 {
-    public class SpotifyDbContexts: IdentityDbContext<AudioUser>
+    public class SpotifyDbContexts: IdentityDbContext
     {
         public SpotifyDbContexts(DbContextOptions<SpotifyDbContexts> options) : base(options)
         {
