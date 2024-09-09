@@ -1,4 +1,5 @@
 ﻿using Domain.Spotify.Configuration;
+using Infrastructure.Spotify.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -43,11 +44,5 @@ namespace Infrastructure.Spotify.Utilities
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-    }
-
-    public interface IAuthUtils
-    {
-        public string GenerateJWToken(string email, string display_name, JwtParamOptions jwtParams);
-        public string RandomStringGenerator();
     }
 }

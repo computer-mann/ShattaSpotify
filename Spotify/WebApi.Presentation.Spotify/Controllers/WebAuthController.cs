@@ -1,7 +1,7 @@
 ﻿using Domain.Spotify.Configuration;
 using Domain.Spotify.Database.Entities;
 using Domain.Spotify.Options;
-using Infrastructure.Spotify.Utilities;
+using Infrastructure.Spotify.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
