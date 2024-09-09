@@ -1,8 +1,4 @@
-﻿using HashidsNet;
-using StackExchange.Redis;
-using Coravel.Invocable;
-using Spotify.Services.Interfaces;
-using Microsoft.Extensions.Logging;
+﻿using Coravel.Invocable;
 
 namespace Presentation.Spotify.HostedServices
 {

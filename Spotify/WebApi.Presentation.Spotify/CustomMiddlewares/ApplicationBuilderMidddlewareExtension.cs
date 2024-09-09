@@ -1,12 +1,8 @@
 ﻿using Coravel;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Presentation.Spotify.HostedServices;
-using System.Globalization;
 
 namespace Spotify.CustomMiddlewares
 {
-    
+
     public static class ApplicationBuilderMidddlewareExtension
     {
         public static IApplicationBuilder UseCoravelSchedulingServices(this IApplicationBuilder app)

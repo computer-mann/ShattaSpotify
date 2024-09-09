@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Spotify.Areas.Auth.Models;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Spotify.Models
 {

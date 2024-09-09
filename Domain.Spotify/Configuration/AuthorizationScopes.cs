@@ -1,4 +1,4 @@
-﻿namespace Spotify.Configuration
+﻿namespace Domain.Spotify.Configuration
 {
     public class AuthorizationScopes
     {

@@ -1,8 +1,6 @@
 using FluentAssertions;
-using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NSubstitute.ExceptionExtensions;
 using Spotify.Controllers;
 
 namespace Spotify_Test

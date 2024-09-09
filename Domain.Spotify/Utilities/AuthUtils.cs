@@ -1,10 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using Spotify.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Spotify.Utilities
+namespace Domain.Spotify.Utilities
 {
     public class AuthUtils:IAuthUtils
     {    

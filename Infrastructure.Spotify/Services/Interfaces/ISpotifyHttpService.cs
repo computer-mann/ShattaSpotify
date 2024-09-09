@@ -1,6 +1,4 @@
-﻿using Spotify.Configuration.SpotifyEndPoints;
-
-namespace Spotify.Services.Interfaces
+﻿namespace Spotify.Services.Interfaces
 {
     public interface ISpotifyHttpService
     {

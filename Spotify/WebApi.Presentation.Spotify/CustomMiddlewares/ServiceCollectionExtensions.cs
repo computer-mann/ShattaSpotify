@@ -1,8 +1,6 @@
 ﻿using Confluent.Kafka;
 using Infrastructure.Spotify.BrokerConfiguration;
 using MassTransit;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Spotify.Services;
 
 namespace Api.Presentation.Spotify.CustomMiddlewares

@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Spotify.Configuration.SpotifyEndPoints;
 using Spotify.Services.Interfaces;
 using StackExchange.Redis;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;

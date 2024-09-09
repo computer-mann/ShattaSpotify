@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Contracts\" />
     <Folder Include="DbModels\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 
   <ItemGroup>

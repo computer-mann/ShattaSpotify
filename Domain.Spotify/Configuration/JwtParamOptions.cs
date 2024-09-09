@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Spotify.Configuration
+namespace Domain.Spotify.Configuration
 {
     public class JwtParamOptions
     {

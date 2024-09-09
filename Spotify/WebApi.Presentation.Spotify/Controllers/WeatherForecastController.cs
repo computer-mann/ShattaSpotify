@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using WebApi.Presentation.Spotify;
 
 namespace Api.Presentation.Spotify.Controllers

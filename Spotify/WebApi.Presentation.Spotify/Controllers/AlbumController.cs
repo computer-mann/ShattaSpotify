@@ -1,8 +1,6 @@
 ﻿using FirebaseAdmin.Auth;
-using Google.Apis.Logging;
 using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Spotify.Controllers
 {

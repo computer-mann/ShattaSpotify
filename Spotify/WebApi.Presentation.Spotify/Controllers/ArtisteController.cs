@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Spotify.Configuration.SpotifyEndPoints;
-using Spotify.Models;
 using StackExchange.Redis;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using Domain.Spotify.Contracts.SpotifyApiResponseObjects;
 
 namespace Spotify.Controllers
 {
