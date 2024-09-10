@@ -1,4 +1,8 @@
 ﻿using Coravel.Invocable;
+using Domain.Spotify.Options;
+using Microsoft.Extensions.Options;
+using SpotifyAPI.Web;
+using StackExchange.Redis;
 
 namespace Presentation.Spotify.HostedServices
 {
@@ -6,12 +10,16 @@ namespace Presentation.Spotify.HostedServices
     {
         //should go and get the latest tokens every 3580 seconds
         private readonly ILogger<RefreshAppTokenCoravelService> logger;
-       // private readonly ISpotifyHttpService auth;
+       private readonly SpotifyAccessConfig _spotifyAccessCredentials;
+        private readonly IDatabase _database;
 
 
-        public RefreshAppTokenCoravelService(ILogger<RefreshAppTokenCoravelService> logger)
+        public RefreshAppTokenCoravelService(ILogger<RefreshAppTokenCoravelService> logger,
+            IOptions<SpotifyAccessConfig> options,IConnectionMultiplexer multiplexer)
         {
             this.logger = logger;
+            _spotifyAccessCredentials = options.Value;
+            _database = multiplexer.GetDatabase(3);
         }
 
         public async Task Invoke()
@@ -23,16 +31,9 @@ namespace Presentation.Spotify.HostedServices
 
         private async Task SeekHourlyTokens()
         {
-            //var result = await auth.GetClientAccessTokenAsync();
-            //if (result.Success)
-            //{
-            //    logger.LogInformation("Successfully put client access token into cache");
-            //}
-            //else
-            //{
-            //    make better logs
-            //    logger.LogWarning("Something bad happened:");
-            //}
+           var config=SpotifyClientConfig.CreateDefault();
+            var request=new ClientCredentialsRequest(_spotifyAccessCredentials.ClientId,_spotifyAccessCredentials.ClientSecret);
+            var response=await new OAuthClient(config).RequestToken(request);
         }
     }
 }

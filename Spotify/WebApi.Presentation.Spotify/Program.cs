@@ -66,19 +66,15 @@ namespace Api.Presentation.Spotify
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHttpClient();
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.AddOptions<SpotifyAccessConfig>().Bind(configuration.GetSection("SpotifyAccessKey")).ValidateDataAnnotations().ValidateOnStart();
+            services.AddOptions<SpotifyAccessConfig>().Bind(configuration.GetSection("SpotifyAccessConfig")).ValidateDataAnnotations().ValidateOnStart();
             services.AddOptions<JwtParamOptions>().Bind(configuration.GetSection("JwtParamOptions")).ValidateDataAnnotations().ValidateOnStart();
            
             services.AddSingleton<IHashids>(new Hashids(configuration.GetSection("HashId:Salt").Value, 5));
             services.AddKafkaProducer();
-            /*  var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetSection("Redis:ConnString").Value);
-              services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-             services.AddTransient<ISpotifyAuth, SpotifyAuthHttpService>();
-
-              services.AddDbContext<AuthDbContext>(options =>
-              {
+              //services.AddDbContext<AuthDbContext>(options =>
+              //{
                   
-              });*/
+              //});
 
             // services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
 

@@ -39,7 +39,9 @@ namespace Api.Presentation.Spotify.CustomMiddlewares
         }
         public static void AddRedisOm(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddSingleton<IRedisConnectionProvider>(new RedisConnectionProvider(configuration.GetConnectionString("Redis")!));
+            var multiplexer = ConnectionMultiplexer.Connect();
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+            services.AddSingleton<IRedisConnectionProvider>(new RedisConnectionProvider(multiplexer));
         }
     }
 }

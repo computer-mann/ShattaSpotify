@@ -1,6 +1,9 @@
-﻿using FirebaseAdmin.Auth;
+﻿using Domain.Spotify.Options;
+using FirebaseAdmin.Auth;
 using HashidsNet;
+using MassTransit.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Spotify.Controllers
 {
@@ -8,59 +11,25 @@ namespace Spotify.Controllers
     [Route("[controller]/[action]")]
     public class AlbumController : ControllerBase
     {
-        private readonly IHashids hashids;
         private readonly ILogger<AlbumController> _logger;
+        private readonly SpotifyAccessConfig _spotifyAccessConfig;
 
-        public AlbumController(IHashids hashids, ILogger<AlbumController> logger)
+        public AlbumController(ILogger<AlbumController> logger,IOptions<SpotifyAccessConfig> options)
         {
-            this.hashids = hashids;
             _logger = logger;
+            _spotifyAccessConfig = options.Value;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            string encoded = hashids.Encode(43);
-            return Ok(new { hashedId = encoded });
+            
+            return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateUser()
-        {
-            UserRecordArgs args = new UserRecordArgs()
-            {
-                Email = "phnunoo8311@example.com",
-                EmailVerified = false,
-                PhoneNumber = "+11234567890",
-                Password = "secretPassword",
-                DisplayName = "John Doe",
-                PhotoUrl = "http://www.example.com/12345678/photo.png",
-                Disabled = false,
-            };
-            try
-            {
-                UserRecord userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(args);
-                return Ok(userRecord);
-            }catch(FirebaseAuthException e)
-            {
-                _logger.LogError(e, "Firebase Exception");
-                return BadRequest(new ProblemDetails()
-                {
-                    Title ="Authentication Problem",
-                    Detail=e.Message
-                });
-            }
-            catch (ArgumentNullException e)
-            {
-                _logger.LogError(e, "Firebase Exception");
-                return BadRequest(e.Message);
-            }
-            catch (ArgumentException e)
-            {
-                _logger.LogError(e, "Firebase Exception");
-                return BadRequest(e.Message);
-            }
-            
-
+        public IActionResult GetOptionsConfig()
+        {            
+            return Ok(_spotifyAccessConfig);
         }
     }
 }
