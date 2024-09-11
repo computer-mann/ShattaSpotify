@@ -24,5 +24,13 @@ namespace Spotify.Controllers
             
             return BadRequest();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsersFollowedArtists()
+        {
+            
+            return Ok(artist);
+        }
+
     }
 }

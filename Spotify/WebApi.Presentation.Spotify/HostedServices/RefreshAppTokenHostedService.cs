@@ -1,5 +1,6 @@
 ﻿using Coravel.Invocable;
 using Domain.Spotify.Options;
+using Infrastructure.Spotify.Constants;
 using Microsoft.Extensions.Options;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
@@ -10,30 +11,46 @@ namespace Presentation.Spotify.HostedServices
     {
         //should go and get the latest tokens every 3580 seconds
         private readonly ILogger<RefreshAppTokenCoravelService> logger;
-       private readonly SpotifyAccessConfig _spotifyAccessCredentials;
+        private readonly SpotifyAccessConfig _spotifyAccessCredentials;
         private readonly IDatabase _database;
 
 
         public RefreshAppTokenCoravelService(ILogger<RefreshAppTokenCoravelService> logger,
-            IOptions<SpotifyAccessConfig> options,IConnectionMultiplexer multiplexer)
+            IOptions<SpotifyAccessConfig> options, IConnectionMultiplexer multiplexer)
         {
             this.logger = logger;
             _spotifyAccessCredentials = options.Value;
-            _database = multiplexer.GetDatabase(3);
+            _database = multiplexer.GetDatabase();
         }
 
         public async Task Invoke()
         {
             logger.LogInformation("Timed RefreshApp Token Coravel Service running.");
             await SeekHourlyTokens();
+            logger.LogInformation("Timed RefreshApp Token Coravel Service finished.");
         }
 
 
         private async Task SeekHourlyTokens()
         {
-           var config=SpotifyClientConfig.CreateDefault();
-            var request=new ClientCredentialsRequest(_spotifyAccessCredentials.ClientId,_spotifyAccessCredentials.ClientSecret);
-            var response=await new OAuthClient(config).RequestToken(request);
+            var token = await _database.StringGetAsync("SpotifyAppToken");
+            if (token.HasValue)
+            {
+                logger.LogInformation("Spotify App Token already exists,background service wont run");
+                return;
+            }
+            var config = SpotifyClientConfig.CreateDefault();
+            var request = new ClientCredentialsRequest(_spotifyAccessCredentials.ClientId!, _spotifyAccessCredentials.ClientSecret!);
+            var response = await new OAuthClient(config).RequestToken(request);
+            if (response != null)
+            {
+                await _database.StringSetAsync(RedisConstants.SpotifyAppToken, response.AccessToken, TimeSpan.FromMinutes(59));
+                logger.LogInformation("Spotify App Token Refreshed");
+            }
+            else
+            {
+                logger.LogError("Failed to get Spotify App Token");
+            }
         }
     }
 }

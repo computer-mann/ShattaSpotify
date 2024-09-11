@@ -1,4 +1,5 @@
 ﻿using Coravel;
+using Presentation.Spotify.HostedServices;
 
 namespace Spotify.CustomMiddlewares
 {
@@ -10,7 +11,7 @@ namespace Spotify.CustomMiddlewares
             var provider = app.ApplicationServices;
             provider.UseScheduler(schedulers =>
             {
-               // schedulers.Schedule<RefreshAppTokenCoravelService>().Hourly().RunOnceAtStart();
+                schedulers.Schedule<RefreshAppTokenCoravelService>().Hourly().RunOnceAtStart();
                 //schedulers.Schedule<WeeklyDbSongClearanceHostedService>().EverySeconds(14).RunOnceAtStart();
                 //schedulers.Schedule<GoogleNotificationHostedService>().EverySeconds(13).RunOnceAtStart();
                 //schedulers.Schedule<CheckNewReleasesHostedService>().EverySeconds(12).RunOnceAtStart();

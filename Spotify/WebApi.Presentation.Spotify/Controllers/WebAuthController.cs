@@ -1,85 +1,81 @@
 ﻿using Domain.Spotify.Configuration;
 using Domain.Spotify.Database.Entities;
 using Domain.Spotify.Options;
+using Infrastructure.Spotify.Constants;
 using Infrastructure.Spotify.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Spotify.Services.Interfaces;
+using SpotifyAPI.Web;
 using StackExchange.Redis;
 using System.Collections.Specialized;
+using System.Text.Json;
 using System.Web;
 
 namespace Presentation.Spotify.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(IgnoreApi = true)]
+    //[ApiExplorerSettings(IgnoreApi = true)]
     public class WebAuthController : ControllerBase
     {
         private readonly ILogger<WebAuthController> _logger;
-        private readonly ISpotifyHttpService spotifyAuth;
-        private readonly SpotifyAccessConfig spotifyAccessKey;
+        private readonly SpotifyAccessConfig _spotifyConfig;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IConnectionMultiplexer multiplexer;
-        private readonly JwtParamOptions jwtParams;
-        private readonly UserManager<AudioUser> userManager;
-        private readonly IAuthUtils authUtils;
+        private readonly IDatabase database;
 
-        public WebAuthController(ISpotifyHttpService spotifyAuth, ILogger<WebAuthController> _logger,
-            IOptions<SpotifyAccessConfig> options, IHttpClientFactory httpClient, IConnectionMultiplexer connection,
-            IOptions<JwtParamOptions> options1, UserManager<AudioUser> userManager, IAuthUtils authUtils)
+        public WebAuthController(ILogger<WebAuthController> _logger,
+            IOptions<SpotifyAccessConfig> options, IConnectionMultiplexer connection)
         {
-            this.spotifyAuth = spotifyAuth;
             this._logger = _logger;
-            spotifyAccessKey = options.Value;
-            _httpClientFactory = httpClient;
-            multiplexer = connection;
-            jwtParams = options1.Value;
-            this.userManager = userManager;
-            this.authUtils = authUtils;
+            _spotifyConfig = options.Value;
+            database = connection.GetDatabase();
         }
 
 
         [HttpGet("/web/login")]
-        public async Task<IActionResult> SpotifyWebLogin()
+        public IActionResult SpotifyWebLogin()
         {
-            var randomString = authUtils.RandomStringGenerator();
-            _logger.LogInformation("Attempting to login user");
-            NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
-            queryString.Add("response_type", "code");
-            queryString.Add("client_id", spotifyAccessKey.ClientId);
-            queryString.Add("scope", $"{AuthorizationScopes.UserReadEmail} {AuthorizationScopes.UserReadPrivate} {AuthorizationScopes.PlaylistReadPrivate} {AuthorizationScopes.PlaylistReadCollaborative}");
-            queryString.Add("redirect_uri", spotifyAccessKey.RedirectUri);
-            queryString.Add("state", randomString);
-            var result = await LocalStringSetAsync(randomString, "1", "randomgenerator", TimeSpan.FromSeconds(20));
-            if (result)
+            var loginRequest = new LoginRequest(new Uri($"{_spotifyConfig.RedirectUri}"),
+                            _spotifyConfig.ClientId!,LoginRequest.ResponseType.Code)
+                {
+                Scope = [ Scopes.PlaylistReadPrivate,Scopes.PlaylistReadPrivate,
+                                Scopes.UserLibraryModify,Scopes.UserFollowModify,
+                                Scopes.PlaylistReadCollaborative,Scopes.UserReadEmail,
+                                Scopes.UserReadPrivate]
+                };
+            var uri = loginRequest.ToUri();
+            return Redirect(uri.ToString());
+        }
+
+        [HttpGet("/")]
+        public async Task<IActionResult> SpotifyAuthCallback([FromQuery]string? code, string? state, string? error)
+        {
+            Uri.TryCreate(_spotifyConfig.RedirectUri,UriKind.Absolute,out var uri);
+            var userTokenResponse = await new OAuthClient().RequestToken(
+               new AuthorizationCodeTokenRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, code,uri!)
+            );
+            if (userTokenResponse == null)
             {
-                return Redirect("https://accounts.spotify.com/authorize?" + queryString.ToString());
+                return BadRequest();
             }
-            _logger.LogError("Cache is down, couldnt put state random generator in code.");
-            return BadRequest(new { message = "Login Failed. Try later" });
+            var client= new SpotifyClient(userTokenResponse.AccessToken);
+            var user = await client.UserProfile.Current();
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            var key= $"{RedisConstants.SpotifyUserKey}:{user.Id}";
+            if (await database.StringSetAsync(key, JsonSerializer.Serialize(userTokenResponse), TimeSpan.FromSeconds(userTokenResponse.ExpiresIn)))
+            {
+                _logger.LogInformation("User data with id={id} logged in and saved to cache", user.Id);
+                return Redirect("/swagger");
+            }
+            _logger.LogInformation("User {@user} logged in", user);
+            _logger.LogInformation("UserAppTokenResponse->  {@response}", userTokenResponse);
+            return Problem(statusCode:StatusCodes.Status424FailedDependency,
+                detail:"Service down on my end",title:"Known Problem");
         }
-
-        [HttpGet("/web/callback")]
-        public async Task<IActionResult> SpotifyAuthCallback(string code, string state, string error)
-        {
-            return Ok();
-        }
-
-
-
-        private async Task<bool> LocalStringSetAsync(string key, string value, string keyPadding, TimeSpan duration)
-        {
-            var db = multiplexer.GetDatabase();
-            return await db.StringSetAsync(keyPadding + key, value, duration);
-        }
-        private async Task<string> LocalStringGetAsync(string key)
-        {
-            var db = multiplexer.GetDatabase();
-            return await db.StringGetAsync(key);
-        }
-
-
     }
 }

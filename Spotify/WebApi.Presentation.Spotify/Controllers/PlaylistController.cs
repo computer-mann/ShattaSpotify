@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,7 +17,8 @@ namespace Spotify.Controllers
         }
         // GET: api/<PlaylistController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        //[EnableRateLimiting("fixed")]
+        public IEnumerable<string> GetUserPlaylist()
         {
             return new string[] { "value1", "value2" };
         }

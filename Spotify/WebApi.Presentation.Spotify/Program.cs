@@ -71,6 +71,7 @@ namespace Api.Presentation.Spotify
            
             services.AddSingleton<IHashids>(new Hashids(configuration.GetSection("HashId:Salt").Value, 5));
             services.AddKafkaProducer();
+            services.AddRedisOm(configuration);
               //services.AddDbContext<AuthDbContext>(options =>
               //{
                   
@@ -95,10 +96,11 @@ namespace Api.Presentation.Spotify
                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:Key").ToString()))
                  };
              });*/
+            //services.AddRateLimiter();
         }
         private static void Configure(WebApplication app)
         {
-            
+            app.UseStatusCodePages();
             app.UseExceptionHandler();
             //app.UseForwardedHeaders(new ForwardedHeadersOptions
             //{
