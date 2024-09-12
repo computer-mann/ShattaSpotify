@@ -1,17 +1,10 @@
-﻿using Domain.Spotify.Configuration;
-using Domain.Spotify.Database.Entities;
-using Domain.Spotify.Options;
+﻿using Domain.Spotify.Options;
 using Infrastructure.Spotify.Constants;
-using Infrastructure.Spotify.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Spotify.Services.Interfaces;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
-using System.Collections.Specialized;
 using System.Text.Json;
-using System.Web;
 
 namespace Presentation.Spotify.Controllers
 {
@@ -22,7 +15,6 @@ namespace Presentation.Spotify.Controllers
     {
         private readonly ILogger<WebAuthController> _logger;
         private readonly SpotifyAccessConfig _spotifyConfig;
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IDatabase database;
 
         public WebAuthController(ILogger<WebAuthController> _logger,
@@ -54,7 +46,7 @@ namespace Presentation.Spotify.Controllers
         {
             Uri.TryCreate(_spotifyConfig.RedirectUri,UriKind.Absolute,out var uri);
             var userTokenResponse = await new OAuthClient().RequestToken(
-               new AuthorizationCodeTokenRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, code,uri!)
+               new AuthorizationCodeTokenRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, code!,uri!)
             );
             if (userTokenResponse == null)
             {

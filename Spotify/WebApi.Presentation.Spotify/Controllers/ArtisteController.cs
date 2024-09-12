@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SpotifyAPI.Web;
 using StackExchange.Redis;
-using System.Net.Http.Headers;
-using System.Text.Json;
 
 namespace Spotify.Controllers
 {
@@ -29,7 +26,7 @@ namespace Spotify.Controllers
         public async Task<IActionResult> GetUsersFollowedArtists()
         {
             
-            return Ok(artist);
+            return Ok();
         }
 
     }

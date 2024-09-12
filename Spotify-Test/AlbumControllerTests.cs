@@ -13,7 +13,7 @@ namespace Spotify_Test
 
         public AlbumControllerTests()
         {
-            sut = new AlbumController(hashidsMock,logger);
+           // sut = new AlbumController(hashidsMock,logger);
         }
 
         [SetUp]

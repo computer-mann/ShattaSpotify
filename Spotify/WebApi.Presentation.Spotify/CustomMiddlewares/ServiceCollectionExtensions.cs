@@ -1,10 +1,8 @@
 ﻿using Confluent.Kafka;
 using Infrastructure.Spotify.BrokerConfiguration;
-using Infrastructure.Spotify.Services;
 using MassTransit;
 using Redis.OM;
 using Redis.OM.Contracts;
-using Spotify.Services;
 using StackExchange.Redis;
 
 namespace Api.Presentation.Spotify.CustomMiddlewares

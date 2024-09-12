@@ -1,7 +1,4 @@
 ﻿using Domain.Spotify.Options;
-using FirebaseAdmin.Auth;
-using HashidsNet;
-using MassTransit.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 

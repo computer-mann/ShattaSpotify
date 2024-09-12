@@ -1,15 +1,10 @@
 ﻿using Domain.Spotify.Options;
 using HashidsNet;
-using MassTransit.Internals.GraphValidation;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Spotify.Services.Interfaces;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 
 namespace Infrastructure.Spotify.Services
 {
