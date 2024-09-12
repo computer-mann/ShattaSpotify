@@ -32,10 +32,10 @@ namespace Presentation.Spotify.Controllers
             var loginRequest = new LoginRequest(new Uri($"{_spotifyConfig.RedirectUri}"),
                             _spotifyConfig.ClientId!,LoginRequest.ResponseType.Code)
                 {
-                Scope = [ Scopes.PlaylistReadPrivate,Scopes.PlaylistReadPrivate,
+                Scope = [ Scopes.PlaylistReadPrivate,
                                 Scopes.UserLibraryModify,Scopes.UserFollowModify,
                                 Scopes.PlaylistReadCollaborative,Scopes.UserReadEmail,
-                                Scopes.UserReadPrivate]
+                                Scopes.UserReadPrivate,Scopes.UserFollowRead]
                 };
             var uri = loginRequest.ToUri();
             return Redirect(uri.ToString());
@@ -59,8 +59,7 @@ namespace Presentation.Spotify.Controllers
                 return BadRequest();
             }
             var key= $"{RedisConstants.SpotifyUserKey}:{user.Id}";
-            await database.StringSetAsync("userdata:", JsonSerializer.Serialize(user), TimeSpan.FromDays(1));
-            if (await database.StringSetAsync(key, JsonSerializer.Serialize(userTokenResponse), TimeSpan.FromSeconds(userTokenResponse.ExpiresIn)))
+            if (await database.StringSetAsync(key, JsonSerializer.Serialize(userTokenResponse), TimeSpan.FromMinutes(120)))
             {
                 _logger.LogInformation("User data with id={id} logged in and saved to cache", user.Id);
                 return Redirect("/swagger");

@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Spotify.Constants;
+using Microsoft.AspNetCore.Mvc;
+using SpotifyAPI.Web;
+using StackExchange.Redis;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,43 +12,49 @@ namespace Spotify.Controllers
     [ApiController]
     public class PlaylistController : ControllerBase
     {
-        private readonly IHttpClientFactory httpClientFactory;
+        private readonly IDatabase _database;
 
-        public PlaylistController(IHttpClientFactory httpClientFactory)
+        public PlaylistController(IConnectionMultiplexer connectionMultiplexer)
         {
-            this.httpClientFactory = httpClientFactory;
+            _database = connectionMultiplexer.GetDatabase();
         }
-        // GET: api/<PlaylistController>
-        [HttpGet]
-        //[EnableRateLimiting("fixed")]
-        public IEnumerable<string> GetUserPlaylist()
+        
+        [HttpGet("owned/{userid}")]
+        public async Task<IActionResult> GetUserPlaylist([FromRoute]string userid)
         {
-            return new string[] { "value1", "value2" };
+            var key = $"{RedisConstants.SpotifyUserKey}:{userid}";
+            var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
+            if (userTokenResponse == null)
+            {
+                return BadRequest();
+            }
+            var client = new SpotifyClient(userTokenResponse.AccessToken);
+            var playlists = await client.Playlists.CurrentUsers();
+            if (playlists == null)
+            {
+                return BadRequest();
+            }
+            var projection = playlists.Items?.Select(n => new { n.Name, n.Id }).ToList();
+            return Ok(projection);
         }
-
-        // GET api/<PlaylistController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        //listsongs
+        [HttpGet("songs/{userid}/{playlistid}")]
+        public async Task<IActionResult> GetPlaylistSongs([FromRoute]string userid,[FromRoute] string playlistid)
         {
-            return "value";
-        }
-
-        // POST api/<PlaylistController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<PlaylistController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PlaylistController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var key = $"{RedisConstants.SpotifyUserKey}:{userid}";
+            var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
+            if (userTokenResponse == null)
+            {
+                return BadRequest();
+            }
+            var client = new SpotifyClient(userTokenResponse.AccessToken);
+            var playlistItems = await client.Playlists.GetItems(playlistid);
+            if (playlistItems == null)
+            {
+                return BadRequest();
+            }
+            var projection = playlistItems?.Items?.Select(n => new { n.Track }).Select(t => t as FullTrack ).ToList();
+            return Ok(projection);
         }
     }
 }

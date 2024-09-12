@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Spotify.Constants;
+using Microsoft.AspNetCore.Mvc;
+using SpotifyAPI.Web;
 using StackExchange.Redis;
+using System.Text.Json;
 
 namespace Spotify.Controllers
 {
@@ -7,12 +10,13 @@ namespace Spotify.Controllers
     [Route("/artist")]
     public class ArtisteController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
+        private readonly ILogger<ArtisteController> _logger;
         private readonly IDatabase _database;
-        public ArtisteController(IHttpClientFactory httpClientFactory,IConnectionMultiplexer connectionMultiplexer)
+        public ArtisteController(IConnectionMultiplexer connectionMultiplexer, ILogger<ArtisteController> logger)
         {
-            _httpClient = httpClientFactory.CreateClient();
-            _database=connectionMultiplexer.GetDatabase();
+
+            _database = connectionMultiplexer.GetDatabase();
+            _logger = logger;
         }
 
         [HttpGet("{name}")]
@@ -22,11 +26,23 @@ namespace Spotify.Controllers
             return BadRequest();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUsersFollowedArtists()
+        [HttpGet("following/{userId}")]
+        public async Task<IActionResult> GetUsersFollowedArtists([FromRoute]string userId)
         {
-            
-            return Ok();
+            var key = $"{RedisConstants.SpotifyUserKey}:{userId}";
+            var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
+            if (userTokenResponse == null)
+            {
+                return BadRequest();
+            }
+            var client = new SpotifyClient(userTokenResponse.AccessToken);
+            var followedArtistsResponse = await client.Follow.OfCurrentUser();
+            if (followedArtistsResponse == null)
+            {
+                return BadRequest();
+            }
+            var followedArtists = followedArtistsResponse.Artists.Items.Select(n=>n.Name).ToList();
+            return Ok(followedArtists);
         }
 
     }
