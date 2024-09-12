@@ -59,6 +59,7 @@ namespace Presentation.Spotify.Controllers
                 return BadRequest();
             }
             var key= $"{RedisConstants.SpotifyUserKey}:{user.Id}";
+            await database.StringSetAsync("userdata:", JsonSerializer.Serialize(user), TimeSpan.FromDays(1));
             if (await database.StringSetAsync(key, JsonSerializer.Serialize(userTokenResponse), TimeSpan.FromSeconds(userTokenResponse.ExpiresIn)))
             {
                 _logger.LogInformation("User data with id={id} logged in and saved to cache", user.Id);
