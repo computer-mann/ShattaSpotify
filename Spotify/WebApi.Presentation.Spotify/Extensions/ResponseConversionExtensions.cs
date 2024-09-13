@@ -1,20 +1,29 @@
-﻿using SpotifyAPI.Web;
+﻿using Presentation.Spotify.Dtos;
+using SpotifyAPI.Web;
 
 namespace Presentation.Spotify.Extensions
 {
     public static class ResponseConversionExtensions
     {
-        public static List<PlaylistTrack<FullTrack>> ToPlaylistFullTrackList(this Paging<PlaylistTrack<IPlayableItem>> paging)
+        public static List<SongsInPlaylist> ToSimplePlaylistResponse(this Paging<PlaylistTrack<IPlayableItem>> paging,string playlistId,string playlistName)
         {
-            var list = new List<PlaylistTrack<FullTrack>>();
+            var list = new List<SongsInPlaylist>();
             foreach (var item in paging.Items)
             {
-                list.Add(new PlaylistTrack<FullTrack>
+                var track =(FullTrack)item.Track;
+                list.Add(new SongsInPlaylist()
                 {
-                    AddedAt = item.AddedAt,
-                    AddedBy = item.AddedBy,
-                    IsLocal = item.IsLocal,
-                    Track = (FullTrack)item.Track
+                   PlaylistId= playlistId,
+                   PlaylistName=playlistName,
+                   Songs= new Songs[]
+                   {
+                       new Songs()
+                       {
+                           Id=track.Id,
+                           Name=track.Name,
+                           Artistes=track.Artists.Select(n=>n.Name).ToArray()
+                       }
+                   }
                 });
             }
             return list;

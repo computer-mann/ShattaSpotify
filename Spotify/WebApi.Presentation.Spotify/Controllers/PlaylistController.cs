@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Spotify.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Spotify.Dtos;
 using Presentation.Spotify.Extensions;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
@@ -38,27 +39,31 @@ namespace Spotify.Controllers
             {
                 return BadRequest();
             }
-            var projection = playlists.Items?.Select(n => new { n.Name, n.Id }).ToList();
+            var projection = playlists.Items?.Select(n => new GetUserPlaylistResponse( n.Name, n.Id )).ToList();
+            await _database.SendPlaylistToCache(projection).ConfigureAwait(false);
             return Ok(projection);
         }
         //listsongs
-        [HttpGet("songs/{userid}/{playlistid}")]
+        [HttpGet("owned/songs/{userid}/{playlistid}")]
+        [ProducesResponseType(typeof(List<FullTrack>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> GetPlaylistSongs([FromRoute] string userid, [FromRoute] string playlistid)
         {
             var key = $"{RedisConstants.SpotifyUserKey}:{userid}";
             var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
             if (userTokenResponse == null)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status424FailedDependency);
             }
+            var playlistName= await _database.StringGetAsync($"playlist:{playlistid}");
             var client = new SpotifyClient(userTokenResponse.AccessToken);
             Paging<PlaylistTrack<IPlayableItem>> playlistItems = await client.Playlists.GetItems(playlistid);
             if (playlistItems == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            return Ok(playlistItems.ToPlaylistFullTrackList());
+            return Ok(playlistItems.ToSimplePlaylistResponse(playlistid,playlistName));
         }
     }
 }

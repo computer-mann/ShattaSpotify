@@ -51,6 +51,7 @@ namespace Api.Presentation.Spotify
             services.AddTransient<RefreshAppTokenCoravelService>();
             services.AddTransient<CheckNewReleasesHostedService>();
             services.AddTransient<GoogleNotificationHostedService>();
+            services.AddTransient<RefreshUserTokenHostedService>();
             
             //FirebaseApp.Create(new AppOptions()
             //{

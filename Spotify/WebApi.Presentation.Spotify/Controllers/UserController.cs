@@ -19,9 +19,8 @@ namespace Presentation.Spotify.Controllers
         public async Task<IActionResult> GetUserKeys()
         {
             
-            var keys= await _database.ExecuteAsync("keys",$"{RedisConstants.SpotifyUserKey}*");
-            
-            return Ok(keys.ToString());
+           
+            return Ok();
         }
     }
 }
