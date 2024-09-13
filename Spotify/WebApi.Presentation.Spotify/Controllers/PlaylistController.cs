@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Spotify.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Spotify.Extensions;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
 using System.Text.Json;
@@ -13,12 +14,15 @@ namespace Spotify.Controllers
     public class PlaylistController : ControllerBase
     {
         private readonly IDatabase _database;
+        //logger
+        private readonly ILogger<PlaylistController> _logger;
 
-        public PlaylistController(IConnectionMultiplexer connectionMultiplexer)
+        public PlaylistController(IConnectionMultiplexer connectionMultiplexer, ILogger<PlaylistController> logger)
         {
             _database = connectionMultiplexer.GetDatabase();
+            _logger = logger;
         }
-        
+
         [HttpGet("owned/{userid}")]
         public async Task<IActionResult> GetUserPlaylist([FromRoute]string userid)
         {
@@ -39,7 +43,7 @@ namespace Spotify.Controllers
         }
         //listsongs
         [HttpGet("songs/{userid}/{playlistid}")]
-        public async Task<IActionResult> GetPlaylistSongs([FromRoute]string userid,[FromRoute] string playlistid)
+        public async Task<ActionResult> GetPlaylistSongs([FromRoute] string userid, [FromRoute] string playlistid)
         {
             var key = $"{RedisConstants.SpotifyUserKey}:{userid}";
             var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
@@ -48,13 +52,13 @@ namespace Spotify.Controllers
                 return BadRequest();
             }
             var client = new SpotifyClient(userTokenResponse.AccessToken);
-            var playlistItems = await client.Playlists.GetItems(playlistid);
+            Paging<PlaylistTrack<IPlayableItem>> playlistItems = await client.Playlists.GetItems(playlistid);
             if (playlistItems == null)
             {
                 return BadRequest();
             }
-            var projection = playlistItems?.Items?.Select(n => new { n.Track }).Select(t => t as FullTrack ).ToList();
-            return Ok(projection);
+
+            return Ok(playlistItems.ToPlaylistFullTrackList());
         }
     }
 }

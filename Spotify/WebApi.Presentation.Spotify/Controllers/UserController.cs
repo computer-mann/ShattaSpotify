@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Spotify.Constants;
+using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis;
 
 namespace Presentation.Spotify.Controllers
 {
@@ -6,9 +8,20 @@ namespace Presentation.Spotify.Controllers
     [ApiController]
     public class UserController:ControllerBase
     {
-        public UserController()
+        private readonly IDatabase _database;
+        public UserController(IConnectionMultiplexer connectionMultiplexer)
+        {
+            _database = connectionMultiplexer.GetDatabase();
+        }
+
+        //get user keys
+        [HttpGet("keys")]
+        public async Task<IActionResult> GetUserKeys()
         {
             
+            var keys= await _database.ExecuteAsync("keys",$"{RedisConstants.SpotifyUserKey}*");
+            
+            return Ok(keys.ToString());
         }
     }
 }
