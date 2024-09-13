@@ -65,5 +65,31 @@ namespace Spotify.Controllers
 
             return Ok(playlistItems.ToSimplePlaylistResponse(playlistid,playlistName));
         }
+
+        //create playlist
+        [HttpPost("owned/{userid}/{playlistName}")]
+        public async Task<IActionResult> CreatePlaylist([FromRoute] string userid, [FromBody] string playlistName)
+        {
+            var key = $"{RedisConstants.SpotifyUserKey}:{userid}";
+            var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
+            if (userTokenResponse == null)
+            {
+                return BadRequest();
+            }
+            var newPlaylist = new PlaylistCreateRequest(playlistName)
+            {
+                Public = true,
+                Collaborative = false,
+                Description = "New playlist created by SpotifyAPI.Web"
+            };
+            var client = new SpotifyClient(userTokenResponse.AccessToken);
+            var playlist = await client.Playlists.Create(userid,newPlaylist);
+            if (playlist == null)
+            {
+                return BadRequest();
+            }
+            await _database.StringSetAsync($"playlist:{playlist.Id}", playlist.Name);
+            return Ok(playlist);
+        }
     }
 }
