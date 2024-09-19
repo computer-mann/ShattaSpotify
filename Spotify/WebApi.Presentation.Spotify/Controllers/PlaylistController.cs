@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Spotify.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Presentation.Spotify.Dtos;
 using Presentation.Spotify.Extensions;
 using SpotifyAPI.Web;
@@ -15,13 +16,12 @@ namespace Spotify.Controllers
     public class PlaylistController : ControllerBase
     {
         private readonly IDatabase _database;
-        //logger
         private readonly ILogger<PlaylistController> _logger;
 
-        public PlaylistController(IConnectionMultiplexer connectionMultiplexer, ILogger<PlaylistController> logger)
+        public PlaylistController(IServiceProvider serviceProvider)
         {
-            _database = connectionMultiplexer.GetDatabase();
-            _logger = logger;
+            _database = serviceProvider.GetRequiredService<IConnectionMultiplexer>().GetDatabase();
+            _logger = serviceProvider.GetRequiredService<ILogger<PlaylistController>>();
         }
 
         [HttpGet("owned/{userid}")]
