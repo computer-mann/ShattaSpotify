@@ -37,19 +37,26 @@ namespace Presentation.Spotify.HostedServices
                 _logger.LogInformation("Found {count} user keys",keys.Count);
                 keys.ForEach(async key =>
                 {
-                    var user = await _database.StringGetAsync(key);
-                    var userToken = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse>(user!);
-                    if (userToken != null && DateTime.UtcNow.Subtract(userToken.CreatedAt) >= TimeSpan.FromHours(1))
+                    try
                     {
-                        var newAuthTokenResponse = await new OAuthClient().RequestToken(
-                        new AuthorizationCodeRefreshRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, userToken!.RefreshToken)
-                        );
-                        if (newAuthTokenResponse != null)
+                        var user = await _database.StringGetAsync(key);
+                        var userToken = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse>(user!);
+                        if (userToken != null && DateTime.UtcNow.Subtract(userToken.CreatedAt) >= TimeSpan.FromHours(1))
                         {
-                            await _database.StringSetAsync(key, JsonSerializer.Serialize(newAuthTokenResponse),TimeSpan.FromHours(2));
-                            _logger.LogInformation($"Refreshed token for user {key}");
+                            var newAuthTokenResponse = await new OAuthClient().RequestToken(
+                            new AuthorizationCodeRefreshRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, userToken!.RefreshToken)
+                            );
+                            if (newAuthTokenResponse != null)
+                            {
+                                await _database.StringSetAsync(key, JsonSerializer.Serialize(newAuthTokenResponse), TimeSpan.FromHours(2));
+                                _logger.LogInformation($"Refreshed token for user {key}");
+                            }
                         }
-                    }                    
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to refresh token for user {key}", key);
+                    }
                 });
             }
         }

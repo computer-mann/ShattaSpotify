@@ -6,6 +6,7 @@ using Spotify.CustomMiddlewares;
 using Presentation.Spotify.HostedServices;
 using Domain.Spotify.Configuration;
 using Domain.Spotify.Options;
+using Microsoft.OpenApi.Models;
 
 namespace Api.Presentation.Spotify
 {
@@ -61,7 +62,10 @@ namespace Api.Presentation.Spotify
 
             services.AddControllers();
             // services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "StreamNote", Version = "v1" }); 
+            });
 
             services.AddScheduler();
             services.AddRouting(options => options.LowercaseUrls = true);

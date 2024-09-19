@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Spotify.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PlaylistController : ControllerBase
     {
@@ -28,11 +28,18 @@ namespace Spotify.Controllers
         public async Task<IActionResult> GetUserPlaylist([FromRoute]string userid)
         {
             var key = $"{RedisConstants.SpotifyUserKey}:{userid}";
-            var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
-            if (userTokenResponse == null)
+            var redisValue = await _database.StringGetAsync(key);
+            if(!redisValue.HasValue)
             {
-                return BadRequest();
+                _logger.LogError("User token not found in cache for user {userid}", userid);
+                return NotFound();
             }
+            var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>(redisValue!);
+            //if (userTokenResponse == null)
+            //{
+            //    _logger.LogError("User token not found in cache for user {userid}", userid);
+            //    return Problem();
+            //}
             var client = new SpotifyClient(userTokenResponse.AccessToken);
             var playlists = await client.Playlists.CurrentUsers();
             if (playlists == null)
