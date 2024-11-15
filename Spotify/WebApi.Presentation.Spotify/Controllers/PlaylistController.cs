@@ -65,7 +65,7 @@ namespace Spotify.Controllers
             var playlistName= await _database.StringGetAsync($"playlist:{playlistid}");
             var client = new SpotifyClient(userTokenResponse.AccessToken);
             Paging<PlaylistTrack<IPlayableItem>> playlistItems = await client.Playlists.GetItems(playlistid);
-            if (playlistItems == null)
+            if (playlistItems == null || !playlistItems.Items!.Any())
             {
                 return NotFound();
             }

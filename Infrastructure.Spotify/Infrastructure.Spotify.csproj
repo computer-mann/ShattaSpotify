@@ -13,14 +13,14 @@
 
   <ItemGroup>
     <PackageReference Include="Hashids.net" Version="1.7.0" />
-    <PackageReference Include="MassTransit" Version="8.2.6-develop.1995" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0-rc.1.24452.1" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.0-rc.1.24452.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-rc.1.24451.1" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-rc.1.24431.7" />
-    <PackageReference Include="Redis.OM" Version="0.7.4" />
+    <PackageReference Include="MassTransit" Version="8.3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageReference Include="Redis.OM" Version="0.7.6" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
-	  <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
+	  <PackageReference Include="SpotifyAPI.Web" Version="7.2.1" />
   </ItemGroup>
 
   <ItemGroup>

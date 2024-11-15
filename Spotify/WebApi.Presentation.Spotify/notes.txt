@@ -20,7 +20,7 @@ in my specific case:
  3. background service to clean up greater than a week's old data in the database
 
 
- ssh -i "D:\Projects\dotnet\SpotifySln\spotify_integration_dont_commit.pem" ubuntu@ec2-18-175-255-78.eu-west-2.compute.amazonaws.com
+ ssh -i "D:\Projects\dotnet\StreamNoteSln\spotify_integration_dont_commit.pem" ubuntu@ec2-18-175-255-78.eu-west-2.compute.amazonaws.com
 
  dotnet publish -c Release -o publish --os linux --no-self-contained
 
