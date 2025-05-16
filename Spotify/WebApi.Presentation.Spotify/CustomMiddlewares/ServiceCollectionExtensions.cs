@@ -39,6 +39,8 @@ namespace Api.Presentation.Spotify.CustomMiddlewares
         {
             var confOptions=ConfigurationOptions.Parse(configuration.GetConnectionString("Redis")!);
             confOptions.DefaultDatabase =int.Parse(configuration["RedisDefaultDatabase"]!);
+            confOptions.User = "default";
+            
             var multiplexer = ConnectionMultiplexer.Connect(confOptions);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
             services.AddSingleton<IRedisConnectionProvider>(new RedisConnectionProvider(multiplexer));
