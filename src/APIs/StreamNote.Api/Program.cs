@@ -1,9 +1,11 @@
+using Coravel;
+using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using StreamNote.Api.CustomMiddlewares;
 using StreamNote.Api.HostedServices;
-using Microsoft.OpenApi.Models;
-using StreamNote.Database.Commons.Options;
 using StreamNote.Database.Commons.Configuration;
+using StreamNote.Database.Commons.Options;
 
 namespace StreamNote.Api
 {
@@ -12,19 +14,83 @@ namespace StreamNote.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var services = builder.Services;
+            var configuration = builder.Configuration;
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.AddServerHeader = false;
             });
+
             Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(builder.Configuration)
+            .WriteTo.Console()
             .CreateLogger();
+
             try
             {
+                
                 builder.Host.UseSerilog();
-                ConfigureServices(builder.Services, builder.Configuration);
+
+                services.AddControllers();
+                services.AddEndpointsApiExplorer();
+
+                services.AddExceptionHandler<GlobalExceptionHandlerMiddleWare>();
+                services.AddProblemDetails();
+                services.AddTransient<WeeklyDbSongClearanceHostedService>();
+                services.AddTransient<RefreshAppTokenCoravelService>();
+                services.AddTransient<CheckNewReleasesHostedService>();
+                services.AddTransient<GoogleNotificationHostedService>();
+                services.AddTransient<RefreshUserTokenHostedService>();
+
+                
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "StreamNote", Version = "v1" });
+                });
+
+                 services.AddScheduler();
+                  services.AddRouting(options => options.LowercaseUrls = true);
+                services.AddHttpClient();
+
+                services.AddOptions<SpotifyAccessConfig>().Bind(configuration.GetSection("SpotifyAccessConfig")).ValidateDataAnnotations().ValidateOnStart();
+                services.AddOptions<JwtParamOptions>().Bind(configuration.GetSection("JwtParamOptions")).ValidateDataAnnotations().ValidateOnStart();
+                services.AddKafkaProducer();
+               
+                services.AddRedisOm(configuration);
+                //services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
+
+
+                //services.AddTransient<IAuthUtils,AuthUtils>();
+                /* services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                 {
+                     options.Audience = "apiusers";
+                     options.Authority = "iamcomputermann";
+                     options.RequireHttpsMetadata = false;
+                     options.TokenValidationParameters = new TokenValidationParameters()
+                     {
+                         ValidateAudience = true,
+                         ValidateIssuer = true,
+                         ValidateIssuerSigningKey = true,
+                         ValidIssuer = Configuration.GetSection("JWT:Issuer").ToString(),
+                         ValidAudience = Configuration.GetSection("JWT:Audience").ToString(),
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:Key").ToString()))
+                     };
+                 });*/
+
                 var app = builder.Build();
-                Configure(app);
+                app.UseCoravelSchedulingServices();
+
+                // app.UseSerilogRequestLogging();
+                if (app.Environment.IsDevelopment())
+                {
+                    app.UseSwagger();
+                    app.UseSwaggerUI();
+                }
+
+                app.UseAuthentication();
+                app.UseAuthorization();
+                Log.Information("Application Starting Up:");
+                app.MapControllers();
+                app.Run();
             }
             catch (Exception ex)
             {
@@ -37,91 +103,9 @@ namespace StreamNote.Api
             }
             finally
             {
-                Log.CloseAndFlush();
+               Log.CloseAndFlush();
             }
-            
         }
-        private static void ConfigureServices(IServiceCollection services,IConfiguration configuration)
-        {
-            services.AddExceptionHandler<GlobalExceptionHandlerMiddleWare>();
-            services.AddProblemDetails();
-            services.AddTransient<WeeklyDbSongClearanceHostedService>();
-            services.AddTransient<RefreshAppTokenCoravelService>();
-            services.AddTransient<CheckNewReleasesHostedService>();
-            services.AddTransient<GoogleNotificationHostedService>();
-            services.AddTransient<RefreshUserTokenHostedService>();
-            
-            //FirebaseApp.Create(new AppOptions()
-            //{
-            //    Credential = GoogleCredential.FromFile("D:\\Projects\\Projects\\cmfirstapp-1941d-firebase-adminsdk-60ady-1258ed7d20.json"),
-            //    ProjectId = "cmfirstapp-1941d"
-            //});
-
-            services.AddControllers();
-            // services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "StreamNote", Version = "v1" }); 
-            });
-
-           // services.AddScheduler();
-            services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddHttpClient();
-            services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.AddOptions<SpotifyAccessConfig>().Bind(configuration.GetSection("SpotifyAccessConfig")).ValidateDataAnnotations().ValidateOnStart();
-            services.AddOptions<JwtParamOptions>().Bind(configuration.GetSection("JwtParamOptions")).ValidateDataAnnotations().ValidateOnStart();
-            services.AddKafkaProducer();
-            services.AddRedisOm(configuration);
-              //services.AddDbContext<AuthDbContext>(options =>
-              //{
-                  
-              //});
-
-            // services.AddIdentityCore<MusicNerd>().AddEntityFrameworkStores<AuthDbContext>();
-
-
-            //services.AddTransient<IAuthUtils,AuthUtils>();
-            /* services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-             {
-                 options.Audience = "apiusers";
-                 options.Authority = "iamcomputermann";
-                 options.RequireHttpsMetadata = false;
-                 options.TokenValidationParameters = new TokenValidationParameters()
-                 {
-                     ValidateAudience = true,
-                     ValidateIssuer = true,
-                     ValidateIssuerSigningKey = true,
-                     ValidIssuer = Configuration.GetSection("JWT:Issuer").ToString(),
-                     ValidAudience = Configuration.GetSection("JWT:Audience").ToString(),
-                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:Key").ToString()))
-                 };
-             });*/
-            //services.AddRateLimiter();
-        }
-        private static void Configure(WebApplication app)
-        {
-            app.UseStatusCodePages();
-            app.UseExceptionHandler();
-            //app.UseForwardedHeaders(new ForwardedHeadersOptions
-            //{
-            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            //});
-
-            app.UseCoravelSchedulingServices();
-
-            //app.UseSerilogRequestLogging();
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-            app.UseHttpsRedirection();
-            app.UseRouting();
-            //app.UseAuthentication();
-            //app.UseAuthorization();
-            app.UseMvc();
-            Log.Information("Application Starting Up:");
-            app.Run();
-        }
+        
     }
 }

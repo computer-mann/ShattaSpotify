@@ -1,4 +1,9 @@
-﻿namespace StreamNote.Api.CustomMiddlewares
+﻿using BrokerConfiguration;
+using Confluent.Kafka;
+using MassTransit;
+using StackExchange.Redis;
+
+namespace StreamNote.Api.CustomMiddlewares
 {
     internal static class ServiceCollectionExtensions
     {
@@ -33,10 +38,11 @@
             var confOptions=ConfigurationOptions.Parse(configuration.GetConnectionString("Redis")!);
             confOptions.DefaultDatabase =int.Parse(configuration["RedisDefaultDatabase"]!);
             confOptions.User = "default";
-            
+            confOptions.Password = configuration["RedisPassword"];
+
             var multiplexer = ConnectionMultiplexer.Connect(confOptions);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-            services.AddSingleton<IRedisConnectionProvider>(new RedisConnectionProvider(multiplexer));
+            //services.AddSingleton<IRedisConnectionProvider>(new RedisConnectionProvider(multiplexer));
         }
     }
 }

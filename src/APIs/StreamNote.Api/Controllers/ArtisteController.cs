@@ -25,9 +25,13 @@ namespace StreamNote.Api.Controllers
             
             return BadRequest();
         }
-
+        /// <summary>
+        /// Get the list of artists followed by the user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("following/{userId}")]
-        public async Task<IActionResult> GetUsersFollowedArtists([FromRoute]string userId)
+        public async Task<IActionResult> GetUsersFollowedArtists([FromRoute]string userId,CancellationToken cancellationToken)
         {
             var key = $"{RedisConstants.SpotifyUserKey}:{userId}";
             var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
@@ -36,12 +40,15 @@ namespace StreamNote.Api.Controllers
                 return BadRequest();
             }
             var client = new SpotifyClient(userTokenResponse.AccessToken);
-            var followedArtistsResponse = await client.Follow.OfCurrentUser();
+            var followedArtistsResponse = await client.Follow.OfCurrentUser(new FollowOfCurrentUserRequest
+            {
+                Limit = 50,
+            },cancellationToken);
             if (followedArtistsResponse == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            var followedArtists = followedArtistsResponse.Artists.Items.Select(n=>n.Name).ToList();
+            var followedArtists = followedArtistsResponse.Artists.Items!.Select(n=> new { n.Name , n.Id}).ToList();
             return Ok(followedArtists);
         }
 

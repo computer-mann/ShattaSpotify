@@ -3,6 +3,8 @@ using Microsoft.Extensions.Options;
 using Spotify.Services.Interfaces;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Database.Commons.Options;
+using System.Net.Http;
 
 namespace Infrastructure.Spotify.Services
 {
@@ -11,17 +13,15 @@ namespace Infrastructure.Spotify.Services
     public class SpotifyHttpService : ISpotifyHttpService
     {
         private readonly IConnectionMultiplexer _redis;
-        private readonly IHashids hashid;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly SpotifyAccessConfig spotifyAccessKey; //i should probably make this a singleton
         private readonly ILogger<SpotifyHttpService> logger;
 
         public SpotifyHttpService(IHttpClientFactory httpClientFactory,IConnectionMultiplexer redis,
-            IHashids hashids,IOptions<SpotifyAccessConfig> options,ILogger<SpotifyHttpService> logger)
+            IOptions<SpotifyAccessConfig> options,ILogger<SpotifyHttpService> logger)
         {
             this.httpClientFactory = httpClientFactory;
             _redis = redis;
-            hashid = hashids;
             spotifyAccessKey = options.Value;
             this.logger = logger;
         }

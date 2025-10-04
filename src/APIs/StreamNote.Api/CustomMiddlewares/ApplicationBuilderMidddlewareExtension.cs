@@ -1,4 +1,5 @@
-﻿using StreamNote.Api.HostedServices;
+﻿using Coravel;
+using StreamNote.Api.HostedServices;
 
 namespace StreamNote.Api.CustomMiddlewares
 {

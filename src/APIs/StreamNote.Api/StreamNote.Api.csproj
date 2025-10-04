@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>f7ec53e0-e239-4a46-9427-61d807e6ee2f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Commons\StreamNote.Database.Commons\StreamNote.Database.Commons.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="logs\" />
   </ItemGroup>
 
 </Project>

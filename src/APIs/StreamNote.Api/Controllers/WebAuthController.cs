@@ -25,7 +25,6 @@ namespace StreamNote.Api.Controllers
             database = connection.GetDatabase();
         }
 
-
         [HttpGet("/web/login")]
         public IActionResult SpotifyWebLogin()
         {
@@ -41,7 +40,7 @@ namespace StreamNote.Api.Controllers
             return Redirect(uri.ToString());
         }
 
-        [HttpGet("/")]
+        [HttpGet("/redirect")]
         public async Task<IActionResult> SpotifyAuthCallback([FromQuery]string? code, string? state, string? error)
         {
             Uri.TryCreate(_spotifyConfig.RedirectUri,UriKind.Absolute,out var uri);
