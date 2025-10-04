@@ -1,11 +1,4 @@
-﻿using Confluent.Kafka;
-using Infrastructure.Spotify.BrokerConfiguration;
-using MassTransit;
-using Redis.OM;
-using Redis.OM.Contracts;
-using StackExchange.Redis;
-
-namespace Api.Presentation.Spotify.CustomMiddlewares
+﻿namespace StreamNote.Api.CustomMiddlewares
 {
     internal static class ServiceCollectionExtensions
     {

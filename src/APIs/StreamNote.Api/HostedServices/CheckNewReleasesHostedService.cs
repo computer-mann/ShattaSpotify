@@ -1,6 +1,6 @@
 ﻿using Coravel.Invocable;
 
-namespace Presentation.Spotify.HostedServices
+namespace StreamNote.Api.HostedServices
 {
     /*
      * to get new releases, get the artist's song 

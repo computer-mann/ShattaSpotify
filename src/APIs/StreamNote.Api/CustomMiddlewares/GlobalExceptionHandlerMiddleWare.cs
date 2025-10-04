@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace Api.Presentation.Spotify.CustomMiddlewares
+namespace StreamNote.Api.CustomMiddlewares
 {
     internal class GlobalExceptionHandlerMiddleWare : IExceptionHandler
     {

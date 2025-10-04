@@ -1,4 +1,4 @@
-﻿namespace Presentation.Spotify.Dtos
+﻿namespace StreamNote.Api.Dtos
 {
     public class GetUserPlaylistResponse
     {

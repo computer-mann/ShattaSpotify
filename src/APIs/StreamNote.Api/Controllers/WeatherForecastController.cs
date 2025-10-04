@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Presentation.Spotify;
 
-namespace Api.Presentation.Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

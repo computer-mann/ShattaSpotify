@@ -1,14 +1,11 @@
-using Coravel;
-using HashidsNet;
 using Serilog;
-using Api.Presentation.Spotify.CustomMiddlewares;
-using Spotify.CustomMiddlewares;
-using Presentation.Spotify.HostedServices;
-using Domain.Spotify.Configuration;
-using Domain.Spotify.Options;
+using StreamNote.Api.CustomMiddlewares;
+using StreamNote.Api.HostedServices;
 using Microsoft.OpenApi.Models;
+using StreamNote.Database.Commons.Options;
+using StreamNote.Database.Commons.Configuration;
 
-namespace Api.Presentation.Spotify
+namespace StreamNote.Api
 {
     public class Program
     {
@@ -67,14 +64,12 @@ namespace Api.Presentation.Spotify
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StreamNote", Version = "v1" }); 
             });
 
-            services.AddScheduler();
+           // services.AddScheduler();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddHttpClient();
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddOptions<SpotifyAccessConfig>().Bind(configuration.GetSection("SpotifyAccessConfig")).ValidateDataAnnotations().ValidateOnStart();
             services.AddOptions<JwtParamOptions>().Bind(configuration.GetSection("JwtParamOptions")).ValidateDataAnnotations().ValidateOnStart();
-           
-            services.AddSingleton<IHashids>(new Hashids(configuration.GetSection("HashId:Salt").Value, 5));
             services.AddKafkaProducer();
             services.AddRedisOm(configuration);
               //services.AddDbContext<AuthDbContext>(options =>
@@ -114,7 +109,7 @@ namespace Api.Presentation.Spotify
 
             app.UseCoravelSchedulingServices();
 
-            app.UseSerilogRequestLogging();
+            //app.UseSerilogRequestLogging();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

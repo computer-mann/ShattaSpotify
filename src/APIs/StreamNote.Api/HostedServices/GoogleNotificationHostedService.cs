@@ -1,6 +1,6 @@
 ﻿using Coravel.Invocable;
 
-namespace Presentation.Spotify.HostedServices
+namespace StreamNote.Api.HostedServices
 {
     //short operations
     //how do i guarrantee the notification was sent?

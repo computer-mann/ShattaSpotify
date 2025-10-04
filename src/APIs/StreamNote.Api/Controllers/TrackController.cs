@@ -1,8 +1,8 @@
-﻿using Infrastructure.Spotify.BrokerConfiguration;
+﻿using BrokerConfiguration;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     //[ApiController]
     [Route("[controller]")]

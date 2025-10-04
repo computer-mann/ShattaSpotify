@@ -1,12 +1,12 @@
-﻿using Domain.Spotify.Options;
-using Infrastructure.Spotify.Constants;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Database.Commons.CommonConstants;
+using StreamNote.Database.Commons.Options;
 using System.Text.Json;
 
-namespace Presentation.Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

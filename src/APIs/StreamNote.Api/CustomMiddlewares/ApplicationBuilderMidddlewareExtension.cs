@@ -1,7 +1,6 @@
-﻿using Coravel;
-using Presentation.Spotify.HostedServices;
+﻿using StreamNote.Api.HostedServices;
 
-namespace Spotify.CustomMiddlewares
+namespace StreamNote.Api.CustomMiddlewares
 {
 
     public static class ApplicationBuilderMidddlewareExtension

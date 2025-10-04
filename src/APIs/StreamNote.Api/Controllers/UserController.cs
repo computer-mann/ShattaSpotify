@@ -1,8 +1,7 @@
-﻿using Infrastructure.Spotify.Constants;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 
-namespace Presentation.Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

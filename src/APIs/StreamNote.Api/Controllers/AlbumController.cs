@@ -1,8 +1,8 @@
-﻿using Domain.Spotify.Options;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using StreamNote.Database.Commons.Options;
 
-namespace Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]

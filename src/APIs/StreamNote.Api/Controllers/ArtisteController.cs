@@ -1,10 +1,10 @@
-﻿using Infrastructure.Spotify.Constants;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Database.Commons.CommonConstants;
 using System.Text.Json;
 
-namespace Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     [ApiController]
     [Route("/artist")]

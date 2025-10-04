@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Spotify.HealthCheck.Controllers
+namespace StreamNote.Api.HealthCheck.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     [AllowAnonymous]

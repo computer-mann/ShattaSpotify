@@ -1,11 +1,11 @@
 ﻿using Coravel.Invocable;
-using Domain.Spotify.Options;
-using Infrastructure.Spotify.Constants;
 using Microsoft.Extensions.Options;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Database.Commons.CommonConstants;
+using StreamNote.Database.Commons.Options;
 
-namespace Presentation.Spotify.HostedServices
+namespace StreamNote.Api.HostedServices
 {
     public class RefreshAppTokenCoravelService : IInvocable
     {

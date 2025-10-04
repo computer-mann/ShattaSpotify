@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 
-namespace Presentation.Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     [ApiController]
     [ApiExplorerSettings(IgnoreApi = true)]

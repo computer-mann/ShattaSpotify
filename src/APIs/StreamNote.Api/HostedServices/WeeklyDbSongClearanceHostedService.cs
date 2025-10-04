@@ -1,6 +1,6 @@
 ﻿using Coravel.Invocable;
 
-namespace Presentation.Spotify.HostedServices
+namespace StreamNote.Api.HostedServices
 {
     public class WeeklyDbSongClearanceHostedService : IInvocable
     {

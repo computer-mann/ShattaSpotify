@@ -1,8 +1,7 @@
-﻿using Presentation.Spotify.Dtos;
-using StackExchange.Redis;
-using System.Text.Json;
+﻿using StackExchange.Redis;
+using StreamNote.Api.Dtos;
 
-namespace Presentation.Spotify.Extensions
+namespace StreamNote.Api.Extensions
 {
     public static class RedisCacheExtensions
     {

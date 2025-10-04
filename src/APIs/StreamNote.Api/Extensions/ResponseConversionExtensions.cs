@@ -1,7 +1,7 @@
-﻿using Presentation.Spotify.Dtos;
-using SpotifyAPI.Web;
+﻿using SpotifyAPI.Web;
+using StreamNote.Api.Dtos;
 
-namespace Presentation.Spotify.Extensions
+namespace StreamNote.Api.Extensions
 {
     public static class ResponseConversionExtensions
     {

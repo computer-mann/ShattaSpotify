@@ -1,4 +1,4 @@
-namespace WebApi.Presentation.Spotify
+namespace StreamNote.Api
 {
     public class WeatherForecast
     {

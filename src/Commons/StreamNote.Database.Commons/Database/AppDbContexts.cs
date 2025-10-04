@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Spotify.Models
+namespace StreamNote.Database.Commons.Database
 {
-    public class SpotifyDbContexts: IdentityDbContext
+    public class AppDbContext: DbContext
     {
-        public SpotifyDbContexts(DbContextOptions<SpotifyDbContexts> options) : base(options)
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }

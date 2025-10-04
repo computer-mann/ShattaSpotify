@@ -1,15 +1,14 @@
-﻿using Infrastructure.Spotify.Constants;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Presentation.Spotify.Dtos;
-using Presentation.Spotify.Extensions;
+﻿using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Api.Dtos;
+using StreamNote.Api.Extensions;
+using StreamNote.Database.Commons.CommonConstants;
 using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Spotify.Controllers
+namespace StreamNote.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
