@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Spotify.Options
+namespace StreamNote.Database.Commons.Options
 {
     public class SpotifyAccessConfig
     {

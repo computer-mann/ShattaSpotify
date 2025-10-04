@@ -1,4 +1,4 @@
-﻿namespace Domain.Spotify.Configuration
+﻿namespace StreamNote.Database.Commons.Configuration
 {
     public class AuthorizationScopes
     {

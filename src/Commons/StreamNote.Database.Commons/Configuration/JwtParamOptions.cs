@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Spotify.Configuration
+namespace StreamNote.Database.Commons.Configuration
 {
     public class JwtParamOptions
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using UuidExtensions;
 
-namespace Domain.Spotify.Database.Entities
+namespace StreamNote.Database.Commons.Database.Entities
 {
     public class AudioUser:IdentityUser<string>
     {
