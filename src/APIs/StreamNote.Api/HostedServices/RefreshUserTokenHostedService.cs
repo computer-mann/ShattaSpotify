@@ -49,7 +49,7 @@ namespace StreamNote.Api.HostedServices
                             if (newAuthTokenResponse != null)
                             {
                                 await _database.StringSetAsync(key, JsonSerializer.Serialize(newAuthTokenResponse), TimeSpan.FromHours(2));
-                                _logger.LogInformation($"Refreshed token for user {key}");
+                                _logger.LogInformation($"[RefreshUserTokenHostedService:Invoke] Refreshed token for user {key}");
                             }
                         }
                     }

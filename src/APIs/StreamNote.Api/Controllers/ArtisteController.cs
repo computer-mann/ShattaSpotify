@@ -25,6 +25,32 @@ namespace StreamNote.Api.Controllers
             
             return BadRequest();
         }
+
+        [HttpGet("{artistId}/albums")]
+        public async Task<IActionResult> GetArtistAlbums([FromRoute] string artistId, CancellationToken cancellationToken)
+        {
+            
+            var appToken = await _database.StringGetAsync(RedisConstants.SpotifyAppToken);
+
+            if (!appToken.HasValue)
+            {
+                return BadRequest("App token not found");
+            }
+
+            var client = new SpotifyClient(appToken!);
+            var albums = await client.Artists.GetAlbums(artistId, new ArtistsAlbumsRequest
+            {
+                Limit = 50,
+                //IncludeGroups = new ArtistsAlbumsRequest.IncludeGroups[] { ArtistsAlbumsRequest.IncludeGroups.Album, ArtistsAlbumsRequest.IncludeGroups.Single }
+            }, cancellationToken);
+
+            if (albums == null || !albums.Items.Any())
+            {
+                return NotFound();
+            }
+            var albumList = albums.Items.Select(n => new { n.Name, n.Id, n.ReleaseDate, n.TotalTracks, n.Images }).ToList();
+            return Ok(albumList);
+        }
         /// <summary>
         /// Get the list of artists followed by the user
         /// </summary>

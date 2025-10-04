@@ -45,7 +45,7 @@ namespace StreamNote.Api.HostedServices
             if (response != null)
             {
                 await _database.StringSetAsync(RedisConstants.SpotifyAppToken, response.AccessToken, TimeSpan.FromMinutes(59));
-                logger.LogInformation("Spotify App Token Refreshed");
+                logger.LogInformation("[RefreshAppTokenCoravelService:SeekHourlyTokens] Spotify App Token Refreshed");
             }
             else
             {
