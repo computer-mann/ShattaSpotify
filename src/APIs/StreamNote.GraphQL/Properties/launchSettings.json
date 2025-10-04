@@ -1,12 +1,14 @@
 {
   "profiles": {
-    "Spotify": {
+    "http": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
+      "launchUrl": "http://localhost:5095/graphql",
+      "applicationUrl": "http://localhost:5095",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:49380;http://localhost:49381"
+      }
     }
   }
 }
