@@ -49,7 +49,7 @@ namespace StreamNote.Api.Controllers
             {
                 return NotFound();
             }
-            var albumList = albums.Items!.Select(n => n.Adapt<ArtistesAlbumsDto>()).ToList();
+            var albumList = albums.Items!.Select(n => n.Adapt<ArtistesContentDto>()).ToList();
             return Ok(albumList);
         }
         /// <summary>
