@@ -17,8 +17,7 @@ namespace StreamNote.Api.Controllers
         [HttpGet("keys")]
         public async Task<IActionResult> GetUserKeys()
         {
-            
-           
+           await Task.CompletedTask;
             return Ok();
         }
     }

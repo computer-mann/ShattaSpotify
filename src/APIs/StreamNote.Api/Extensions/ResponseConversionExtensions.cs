@@ -8,7 +8,7 @@ namespace StreamNote.Api.Extensions
         public static List<SongsInPlaylist> ToSimplePlaylistResponse(this Paging<PlaylistTrack<IPlayableItem>> paging,string playlistId,string playlistName)
         {
             var list = new List<SongsInPlaylist>();
-            foreach (var item in paging.Items)
+            foreach (var item in paging.Items!)
             {
                 var track =(FullTrack)item.Track;
                 list.Add(new SongsInPlaylist()

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Api.Dtos;
 using StreamNote.Database.Commons.CommonConstants;
 using System.Text.Json;
 
@@ -14,7 +16,6 @@ namespace StreamNote.Api.Controllers
         private readonly IDatabase _database;
         public ArtisteController(IConnectionMultiplexer connectionMultiplexer, ILogger<ArtisteController> logger)
         {
-
             _database = connectionMultiplexer.GetDatabase();
             _logger = logger;
         }
@@ -22,7 +23,7 @@ namespace StreamNote.Api.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> Index(string name)
         {
-            
+            await Task.CompletedTask;
             return BadRequest();
         }
 
@@ -44,11 +45,11 @@ namespace StreamNote.Api.Controllers
                 //IncludeGroups = new ArtistsAlbumsRequest.IncludeGroups[] { ArtistsAlbumsRequest.IncludeGroups.Album, ArtistsAlbumsRequest.IncludeGroups.Single }
             }, cancellationToken);
 
-            if (albums == null || !albums.Items.Any())
+            if (albums == null || !albums.Items!.Any())
             {
                 return NotFound();
             }
-            var albumList = albums.Items.Select(n => new { n.Name, n.Id, n.ReleaseDate, n.TotalTracks, n.Images }).ToList();
+            var albumList = albums.Items!.Select(n => n.Adapt<ArtistesAlbumsDto>()).ToList();
             return Ok(albumList);
         }
         /// <summary>
@@ -60,12 +61,13 @@ namespace StreamNote.Api.Controllers
         public async Task<IActionResult> GetUsersFollowedArtists([FromRoute]string userId,CancellationToken cancellationToken)
         {
             var key = $"{RedisConstants.SpotifyUserKey}:{userId}";
-            var userTokenResponse = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse?>((await _database.StringGetAsync(key))!);
+            var userToken = await _database.StringGetAsync(key);
+            var userTokenResponse = JsonSerializer.Deserialize<UserWithAuthorizationCodeResponse?>(userToken.ToString());
             if (userTokenResponse == null)
             {
                 return BadRequest();
             }
-            var client = new SpotifyClient(userTokenResponse.AccessToken);
+            var client = new SpotifyClient(userTokenResponse.AuthorizationCodeTokenResponse.AccessToken);
             var followedArtistsResponse = await client.Follow.OfCurrentUser(new FollowOfCurrentUserRequest
             {
                 Limit = 50,
@@ -74,7 +76,8 @@ namespace StreamNote.Api.Controllers
             {
                 return NotFound();
             }
-            var followedArtists = followedArtistsResponse.Artists.Items!.Select(n=> new { n.Name , n.Id}).ToList();
+            var followedArtists = followedArtistsResponse.Artists.Items!.Select(n=> new { n.Name , n.Id})
+                                    .OrderBy(o => o.Name).ToList();
             return Ok(followedArtists);
         }
 

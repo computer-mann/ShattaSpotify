@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Api.Dtos;
 using StreamNote.Database.Commons.CommonConstants;
 using StreamNote.Database.Commons.Options;
 using System.Text.Json;
@@ -40,11 +41,11 @@ namespace StreamNote.Api.HostedServices
                     try
                     {
                         var user = await _database.StringGetAsync(key);
-                        var userToken = JsonSerializer.Deserialize<AuthorizationCodeTokenResponse>(user!);
-                        if (userToken != null && DateTime.UtcNow.Subtract(userToken.CreatedAt) >= TimeSpan.FromHours(1))
+                        var userToken = JsonSerializer.Deserialize<UserWithAuthorizationCodeResponse>(user.ToString());
+                        if (userToken != null && DateTime.UtcNow.Subtract(userToken.AuthorizationCodeTokenResponse.CreatedAt) >= TimeSpan.FromHours(1))
                         {
                             var newAuthTokenResponse = await new OAuthClient().RequestToken(
-                            new AuthorizationCodeRefreshRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, userToken!.RefreshToken)
+                            new AuthorizationCodeRefreshRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, userToken!.AuthorizationCodeTokenResponse.RefreshToken)
                             );
                             if (newAuthTokenResponse != null)
                             {

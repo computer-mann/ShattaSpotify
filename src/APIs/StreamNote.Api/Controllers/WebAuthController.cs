@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SpotifyAPI.Web;
 using StackExchange.Redis;
+using StreamNote.Api.Dtos;
 using StreamNote.Database.Commons.CommonConstants;
 using StreamNote.Database.Commons.Options;
 using System.Text.Json;
@@ -43,6 +44,7 @@ namespace StreamNote.Api.Controllers
         [HttpGet("/redirect")]
         public async Task<IActionResult> SpotifyAuthCallback([FromQuery]string? code, string? state, string? error)
         {
+            //the code here is the authorization code
             Uri.TryCreate(_spotifyConfig.RedirectUri,UriKind.Absolute,out var uri);
             var userTokenResponse = await new OAuthClient().RequestToken(
                new AuthorizationCodeTokenRequest(_spotifyConfig.ClientId!, _spotifyConfig.ClientSecret!, code!,uri!)
@@ -58,7 +60,12 @@ namespace StreamNote.Api.Controllers
                 return BadRequest();
             }
             var key= $"{RedisConstants.SpotifyUserKey}:{user.Id}";
-            if (await database.StringSetAsync(key, JsonSerializer.Serialize(userTokenResponse), TimeSpan.FromMinutes(120)))
+            var toRedisObject = new UserWithAuthorizationCodeResponse
+            {
+                AuthorizationCodeTokenResponse = userTokenResponse,
+                Email = user.Email!,
+            };
+            if (await database.StringSetAsync(key, JsonSerializer.Serialize(toRedisObject), TimeSpan.FromMinutes(120)))
             {
                 _logger.LogInformation("User data with id={id} logged in and saved to cache", user.Id);
                 return Redirect("/swagger");
