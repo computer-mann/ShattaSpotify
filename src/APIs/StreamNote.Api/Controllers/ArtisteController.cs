@@ -41,8 +41,8 @@ namespace StreamNote.Api.Controllers
             var client = new SpotifyClient(appToken!);
             var albums = await client.Artists.GetAlbums(artistId, new ArtistsAlbumsRequest
             {
-                Limit = 50,
-                //IncludeGroups = new ArtistsAlbumsRequest.IncludeGroups[] { ArtistsAlbumsRequest.IncludeGroups.Album, ArtistsAlbumsRequest.IncludeGroups.Single }
+                Limit = 20,
+                IncludeGroupsParam = ArtistsAlbumsRequest.IncludeGroups.Album
             }, cancellationToken);
 
             if (albums == null || !albums.Items!.Any())
@@ -50,7 +50,58 @@ namespace StreamNote.Api.Controllers
                 return NotFound();
             }
             var albumList = albums.Items!.Select(n => n.Adapt<ArtistesContentDto>()).ToList();
-            return Ok(albumList);
+            var paging = new Paging<ArtistesContentDto>
+            {
+                Items = albumList,
+                Limit = albums.Limit,
+                Next = albums.Next,
+                Offset = albums.Offset,
+                Previous = albums.Previous,
+                Total = albums.Total
+            };
+            return Ok(paging);
+        }
+
+        /// <summary>
+        /// 
+        /// Get the singles of the artist
+        /// </summary>
+        /// <param name="artistId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("{artistId}/singles")]
+        public async Task<IActionResult> GetArtistSingles([FromRoute] string artistId, CancellationToken cancellationToken)
+        {
+
+            var appToken = await _database.StringGetAsync(RedisConstants.SpotifyAppToken);
+
+            if (!appToken.HasValue)
+            {
+                return BadRequest("App token not found");
+            }
+
+            var client = new SpotifyClient(appToken!);
+            var albums = await client.Artists.GetAlbums(artistId, new ArtistsAlbumsRequest
+            {
+                Limit = 20,
+                IncludeGroupsParam = ArtistsAlbumsRequest.IncludeGroups.Single
+            }, cancellationToken);
+
+            if (albums == null || !albums.Items!.Any())
+            {
+                return NotFound();
+            }
+            var albumList = albums.Items!.Select(n => n.Adapt<ArtistesContentDto>()).ToList();
+            var paging = new Paging<ArtistesContentDto>
+            {
+                Items = albumList,
+                Limit = albums.Limit,
+                Next = albums.Next,
+                Offset = albums.Offset,
+                Previous = albums.Previous,
+                Total = albums.Total
+            };
+            return Ok(paging);
         }
         /// <summary>
         /// Get the list of artists followed by the user

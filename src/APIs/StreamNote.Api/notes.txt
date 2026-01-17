@@ -40,8 +40,4 @@ tar -C . -xf dotnet.tar.gz
 
 unrar x publish.rar
 
-
-Store the last next hash in the db
-when fetching new releases, pass the last next hash to get only new releases
-The last checked hash is the hash that was used to fetch the last batch of releases when storing the releases, 
-When fetching new releases, if the next hash is the same as the last checked hash, then there are no new releases
+Spotify gives me the songs ordered by release date, so i can just take the first 5 songs from the list
