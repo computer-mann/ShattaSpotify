@@ -2,7 +2,7 @@
 
 namespace MoneyMagic.GraphQL.Binance
 {
-    public class OrderBook
+    public class BinanceOrderBook
     {
         [JsonPropertyName("lastUpdateId")]
         public long LastUpdateId { get; set; }
@@ -12,5 +12,7 @@ namespace MoneyMagic.GraphQL.Binance
 
         [JsonPropertyName("asks")]
         public List<List<string>> Asks { get; set; } = [];
+
+
     }
 }
