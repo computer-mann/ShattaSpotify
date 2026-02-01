@@ -16,7 +16,7 @@ namespace MoneyMagic.GraphQL.ViewModels
         {
             LastUpdateId = binanceOrderBook.LastUpdateId;
             Bids = binanceOrderBook.Bids.Select(orders=> new TradeOrder(orders[0], orders[1])).ToList();
-            Asks = binanceOrderBook.Asks.Select(orders => new TradeOrder(orders[0], orders[1])).Where(s => decimal.Parse(s.price) < 100)
+            Asks = binanceOrderBook.Asks.Select(orders => new TradeOrder(orders[0], orders[1])).Where(s => decimal.Parse(s.price) < 200)
                 .ToList();
             ;
         }
