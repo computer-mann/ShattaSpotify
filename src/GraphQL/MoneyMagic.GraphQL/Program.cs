@@ -4,6 +4,8 @@ builder.AddGraphQL().AddTypes();
 
 var app = builder.Build();
 
+app.UseWebSockets();
+
 app.MapGraphQL();
 
 app.RunWithGraphQLCommands(args);
