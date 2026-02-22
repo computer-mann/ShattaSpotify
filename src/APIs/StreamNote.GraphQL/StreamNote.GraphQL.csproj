@@ -21,4 +21,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Subscriptions\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
 </Project>

@@ -30,4 +30,8 @@
 	  <PackageReference Include="Mapster" Version="9.0.0-pre01" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
