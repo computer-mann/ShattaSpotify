@@ -1,4 +1,6 @@
-﻿namespace StreamNote.GraphQL.Mutations
+﻿using StreamNote.GraphQL.Services.Interfaces;
+
+namespace StreamNote.GraphQL.Mutations
 {
     [MutationType]
     public class FirebaseAdminMutations

@@ -1,4 +1,4 @@
-﻿namespace StreamNote.GraphQL.Services.Implementations
+﻿namespace StreamNote.GraphQL.Services.Interfaces
 {
     public interface IFirebaseAdminService
     {

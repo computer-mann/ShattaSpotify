@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StreamNote.Database.Commons.Database.Entities;
 
 namespace StreamNote.Database.Commons.Database
 {
@@ -15,6 +16,7 @@ namespace StreamNote.Database.Commons.Database
         //public DbSet<PlayList> PlayLists { get; set; }
         //public DbSet<Streamer> MusicNerds { get; set; }
         //public Artist Artists { get; set; }
+        public DbSet<FcmUserTokens> FcmUserTokens { get; set; }
 
     }
 }
