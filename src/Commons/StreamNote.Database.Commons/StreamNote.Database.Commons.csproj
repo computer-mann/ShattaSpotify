@@ -28,6 +28,7 @@
 	  <PackageReference Include="MassTransit" Version="8.5.3" />
 	  <PackageReference Include="MassTransit.Kafka" Version="8.5.3" />
 	  <PackageReference Include="Coravel" Version="6.0.2" />
+	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
 	  <PackageReference Include="Mapster" Version="9.0.0-pre01" />
   </ItemGroup>
 
